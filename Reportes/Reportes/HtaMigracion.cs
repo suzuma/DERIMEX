@@ -142,6 +142,11 @@ namespace Reportes
                 ctx.Configuration.AutoDetectChangesEnabled = false;
                 admProductos nProductos;
                 int iTotal = 0;
+                foreach (var row in ctx.admProductos) {
+                    ctx.admProductos.Remove(row);
+                }
+                ctx.SaveChanges();
+
                 foreach (DataRow item in tDatos.Rows) {
                     nProductos = new admProductos();
                     //cidprodu01 ccodigop01 cnombrep01 ctipopro01 cfechaal01 ccontrol01 cidfotop01 cdescrip01 cmetodoc01 cpesopro01
@@ -332,6 +337,10 @@ namespace Reportes
                 //ctx.Database.ExecuteSqlCommand("TRUNCATE TABLE admcapasproducto");
                 admCapasProducto nCapa;
                 int indice = 0;
+                foreach (var row in ctx.admCapasProducto) {
+                    ctx.admCapasProducto.Remove(row);
+                }
+                ctx.SaveChanges();
                 foreach (DataRow item in tDatos.Rows)
                 {
                     nCapa = new admCapasProducto();
@@ -393,6 +402,20 @@ namespace Reportes
                 }
             }
         }
+
+        public static void Limpiar()
+        {
+            using(var ctx =new DataModel())
+            {
+                List<admCapasProducto> datos = ctx.admCapasProducto.Where(r => r.CIDCAPA > 0).ToList();
+                foreach(var row in datos)
+                {
+                    ctx.admCapasProducto.Remove(row);
+                }
+                ctx.SaveChanges();
+            }
+        }
+
 
         #region "CODIGO COMENTADO"
         /*

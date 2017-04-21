@@ -17,11 +17,12 @@ using System.Configuration;
 using Reportes.Tools;
 using System.Net.Mail;
 
-//5004-L, 5641-1000-L
+//5004-L, 5641-1000-L   1059724211
 namespace Reportes
 {
     public partial class frmPanel : Form
     {
+        public static Boolean iniciarSincronizacion = false;
         public static System.Drawing.Color cGris = System.Drawing.Color.FromArgb(251, 252, 252);
         public static System.Drawing.Color cVerde = System.Drawing.Color.FromArgb(229,255,204);
         public static System.Drawing.Color cAmarillo = System.Drawing.Color.FromArgb(255,255,204);
@@ -188,27 +189,37 @@ namespace Reportes
             grdPizarra.Rows[iRenglon].Cells[0].ToolTipText = almacen.CodigoAlmacen;
              */
 
+        private void inicializarPantalla()
+        {
+            #region "CODIGO DE INICIALIZACION"
+            AcDeBotones(false);
+            Reportes.Tools.ELog.save("PANEL DE CONTROL", new Exception("SE CARGARON LOS BONES"));
+            InicializarCiadricula();
+            Reportes.Tools.ELog.save("PANEL DE CONTROL", new Exception("CUADRICULA"));
+            var lista = conAlmacen.listarAlmacenes();
+            Reportes.Tools.ELog.save("PANEL DE CONTROL", new Exception("LISTA DE ALMACENES"));
+            this.cmbAlmacenes.DisplayMember = "CNOMBREALMACEN";
+            this.cmbAlmacenes.ValueMember = "CIDALMACEN";
+            this.cmbAlmacenes.DataSource = lista;
+            //AcDeBotones();
+
+            button5.Enabled = true;
+            if (conUsuarios.uAutentificado == null)
+            {
+                frmAutentificar nVentana = frmAutentificar.getIntancia(this);
+                nVentana.ShowDialog();
+            }
+            #endregion
+
+        }
 
         private void frmPanel_Load(object sender, EventArgs e)
         {
             try {
-                AcDeBotones(false);
-                Reportes.Tools.ELog.save("PANEL DE CONTROL", new Exception("SE CARGARON LOS BONES"));
-                InicializarCiadricula();
-                Reportes.Tools.ELog.save("PANEL DE CONTROL", new Exception("CUADRICULA"));
-                var lista = conAlmacen.listarAlmacenes();
-                Reportes.Tools.ELog.save("PANEL DE CONTROL", new Exception("LISTA DE ALMACENES"));
-                this.cmbAlmacenes.DisplayMember = "CNOMBREALMACEN";
-                this.cmbAlmacenes.ValueMember = "CIDALMACEN";
-                this.cmbAlmacenes.DataSource = lista;
-                //AcDeBotones();
 
-                button5.Enabled = true;
-                if (conUsuarios.uAutentificado == null)
-                {
-                    frmAutentificar nVentana = frmAutentificar.getIntancia(this);
-                    nVentana.ShowDialog();
-                }
+              
+              
+
             }
             catch (Exception ex)
             {

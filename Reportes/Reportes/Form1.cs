@@ -52,6 +52,8 @@ namespace Reportes
 
         private void btbProductos_Click(object sender, EventArgs e)
         {
+
+
             HtaMigracion.llenarDatosProductos();
             this.proProductos.Minimum = 0;
             this.proProductos.Maximum = HtaMigracion.tDatos.Rows.Count;
@@ -82,12 +84,16 @@ namespace Reportes
 
         private void bacProductos_DoWork(object sender, DoWorkEventArgs e)
         {
+
+
             HtaMigracion.CargarProductos(this.bacProductos);
+
         }
 
         private void btnCapasProductos_Click(object sender, EventArgs e)
         {
             HtaMigracion.llenarDatosCapasProducto();
+            HtaMigracion.Limpiar();
             this.proCapasProductos.Minimum = 0;
             this.proCapasProductos.Maximum = HtaMigracion.tDatos.Rows.Count;
             bacCapasProductos.RunWorkerAsync();
@@ -107,6 +113,11 @@ namespace Reportes
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }
