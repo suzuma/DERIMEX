@@ -39,8 +39,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btnHtml = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnPdf = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grdDatos)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -151,16 +151,6 @@
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(7, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 20);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "ALMACEN:";
-            // 
             // btnPdf
             // 
             this.btnPdf.ImageIndex = 4;
@@ -174,6 +164,16 @@
             this.btnPdf.UseVisualStyleBackColor = true;
             this.btnPdf.Click += new System.EventHandler(this.btnPdf_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(7, 35);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(90, 20);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "ALMACEN:";
+            // 
             // btnExcel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -183,7 +183,7 @@
             this.Controls.Add(this.grdDatos);
             this.Name = "btnExcel";
             this.Text = "frmPanel";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmPanel_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdDatos)).EndInit();
             this.groupBox1.ResumeLayout(false);

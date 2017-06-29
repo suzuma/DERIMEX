@@ -428,10 +428,12 @@ namespace Reportes
                 save.Filter = "PDF Files (*.pdf)|*.pdf";
                 save.DefaultExt = "pdf";
                 save.AddExtension = true;
+                save.FileName = "REPORTE-" + System.DateTime.Now.ToString("MMddyy");
                 if (save.ShowDialog() == DialogResult.OK) {
                     string filename = save.FileName;
                     Document doc = new Document(PageSize.A3, 9, 9, 9, 9);
-                    Chunk encab = new Chunk("REPORTE", FontFactory.GetFont("COURIER", 18));
+                    String Encabezado = "ALMACEN: " + this.cmbAlmacenes.Text + "   FECHA: " + System.DateTime.Now.ToString() +"\n\n";
+                    Chunk encab = new Chunk(Encabezado, FontFactory.GetFont("COURIER", 18));
                     try
                     {
                         FileStream file = new FileStream(filename, FileMode.OpenOrCreate);
@@ -439,7 +441,7 @@ namespace Reportes
                         writer.ViewerPreferences = PdfWriter.PageModeUseThumbs;
                         writer.ViewerPreferences = PdfWriter.PageLayoutOneColumn;
                         doc.Open();
-
+                       
                         doc.Add(new Paragraph(encab));
                         GenerarDocumentos(doc);
 
@@ -477,21 +479,27 @@ namespace Reportes
             datatable.DefaultCell.BackgroundColor = iTextSharp.text.BaseColor.WHITE;
 
             //DEFINIMOS EL COLOR DE LOS BORDES 
-            datatable.DefaultCell.BorderColor = iTextSharp.text.BaseColor.BLACK;
+            datatable.DefaultCell.BorderColor = iTextSharp.text.BaseColor.LIGHT_GRAY;
 
             //LA FUENTE DE NUESTRO TEXTO 
-            iTextSharp.text.Font fuente = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA);
+            iTextSharp.text.Font fuente = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.COURIER,8);
 
             Phrase objP = new Phrase("A", fuente);
 
-            datatable.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            datatable.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
+           
 
             //SE GENERA EL ENCABEZADO DE LA TABLA EN EL PDF  
             for (int i = 0; i < grdDatos.ColumnCount; i++)
             {
                 objP = new Phrase(grdDatos.Columns[i].HeaderText, fuente);
                 datatable.HorizontalAlignment = Element.ALIGN_CENTER;
-                datatable.AddCell(objP);
+
+                PdfPCell cel = new PdfPCell();
+                cel.AddElement(objP);
+                cel.Padding = 3;
+                cel.BackgroundColor = iTextSharp.text.BaseColor.LIGHT_GRAY;
+                datatable.AddCell(cel);
             }
             datatable.HeaderRows = 2;
 
@@ -502,8 +510,26 @@ namespace Reportes
             {
                 for (int j = 0; j < grdDatos.ColumnCount; j++)
                 {
-                    objP = new Phrase(grdDatos[j, i].Value.ToString(), fuente);
-                    datatable.AddCell(objP);
+                    if (grdDatos[j, i].Value != null)
+                    {
+                        
+                        objP = new Phrase(grdDatos[j, i].Value.ToString() , fuente);
+                        objP.Font.Color = iTextSharp.text.BaseColor.BLACK;
+                        if (j == 8)
+                        {
+                            double val = Convert.ToDouble(grdDatos[j,i].Value);
+                            if (val > 0) {
+                                objP.Font.Color = iTextSharp.text.BaseColor.RED;
+                            }
+
+                        }
+                        
+                        PdfPCell cel = new PdfPCell();                        
+                        cel.Padding = 3;                        
+                        cel.AddElement(objP);
+                        datatable.AddCell(cel);
+                        
+                    }
                 }
                 datatable.CompleteRow();
             }
