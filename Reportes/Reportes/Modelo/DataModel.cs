@@ -16,6 +16,11 @@ namespace Reportes.Modelo
         public virtual DbSet<admProductos> admProductos { get; set; }    
         public virtual DbSet<admCapasProducto> admCapasProducto { get; set; }
 
+        public DbSet<Permiso> Permisos { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Rol> Roles { get; set; }
+        public DbSet<PermisoNegadoRol> PermisosNegadosRol { get; set; }
+
         /*
         public virtual DbSet<admExistenciaCosto> admExistenciaCosto { get; set; }
         public virtual DbSet<admMovimientoSerie> admMovimientoSerie { get; set; }

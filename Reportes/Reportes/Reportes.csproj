@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EASendMail45, Version=7.3.1.2, Culture=neutral, PublicKeyToken=88adb80ecd66540b, processorArchitecture=MSIL">
+      <HintPath>..\packages\EASendMail.7.3.1.2\lib\net45\EASendMail45.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -79,11 +83,29 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmAdminUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAdminUsuarios.Designer.cs">
+      <DependentUpon>frmAdminUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAutentificar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAutentificar.Designer.cs">
+      <DependentUpon>frmAutentificar.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmConfiguracion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmConfiguracion.Designer.cs">
       <DependentUpon>frmConfiguracion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmNuevoUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNuevoUsuario.Designer.cs">
+      <DependentUpon>frmNuevoUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPanel.cs">
       <SubType>Form</SubType>
@@ -96,6 +118,10 @@
     <Compile Include="Migrations\201706281419166_INICIAL.Designer.cs">
       <DependentUpon>201706281419166_INICIAL.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706291656393_ADD-TABLES-PERMISOS.cs" />
+    <Compile Include="Migrations\201706291656393_ADD-TABLES-PERMISOS.Designer.cs">
+      <DependentUpon>201706291656393_ADD-TABLES-PERMISOS.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Modelo\admAlmacenes.cs" />
     <Compile Include="Modelo\admCapasProducto.cs" />
@@ -106,20 +132,40 @@
     <Compile Include="Modelo\admNumerosSerie.cs" />
     <Compile Include="Modelo\admProductos.cs" />
     <Compile Include="Modelo\conAlmacen.cs" />
+    <Compile Include="Modelo\conUsuarios.cs" />
     <Compile Include="Modelo\DataModel.cs" />
+    <Compile Include="Modelo\Permiso.cs" />
+    <Compile Include="Modelo\PermisoNegadoRol.cs" />
+    <Compile Include="Modelo\Rol.cs" />
+    <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\ELog.cs" />
+    <Compile Include="Tools\Seguridad.cs" />
+    <Compile Include="Tools\SendMail.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmAdminUsuarios.resx">
+      <DependentUpon>frmAdminUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAutentificar.resx">
+      <DependentUpon>frmAutentificar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmConfiguracion.resx">
       <DependentUpon>frmConfiguracion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNuevoUsuario.resx">
+      <DependentUpon>frmNuevoUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPanel.resx">
       <DependentUpon>frmPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706281419166_INICIAL.resx">
       <DependentUpon>201706281419166_INICIAL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706291656393_ADD-TABLES-PERMISOS.resx">
+      <DependentUpon>201706291656393_ADD-TABLES-PERMISOS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -144,6 +190,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1498787292_user_login.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

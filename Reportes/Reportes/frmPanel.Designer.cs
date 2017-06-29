@@ -1,6 +1,6 @@
 ﻿namespace Reportes
 {
-    partial class btnExcel
+    partial class frmPanel
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(btnExcel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPanel));
             this.grdDatos = new System.Windows.Forms.DataGridView();
             this.cmbAlmacenes = new System.Windows.Forms.ComboBox();
             this.frmSync = new System.Windows.Forms.Button();
@@ -39,8 +39,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btnHtml = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnPdf = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.btnUsuarios = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdDatos)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +58,7 @@
             this.grdDatos.Location = new System.Drawing.Point(12, 94);
             this.grdDatos.Name = "grdDatos";
             this.grdDatos.RowHeadersVisible = false;
-            this.grdDatos.Size = new System.Drawing.Size(1147, 344);
+            this.grdDatos.Size = new System.Drawing.Size(1221, 344);
             this.grdDatos.TabIndex = 0;
             // 
             // cmbAlmacenes
@@ -69,12 +73,14 @@
             // 
             // frmSync
             // 
+            this.frmSync.Enabled = false;
             this.frmSync.ImageIndex = 0;
             this.frmSync.ImageList = this.imageList1;
-            this.frmSync.Location = new System.Drawing.Point(1065, 14);
+            this.frmSync.Location = new System.Drawing.Point(1139, 14);
             this.frmSync.Name = "frmSync";
             this.frmSync.Size = new System.Drawing.Size(75, 65);
             this.frmSync.TabIndex = 3;
+            this.frmSync.Tag = "1";
             this.frmSync.Text = "Sincronizar";
             this.frmSync.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.frmSync.UseVisualStyleBackColor = true;
@@ -89,15 +95,21 @@
             this.imageList1.Images.SetKeyName(2, "1498696784_excel.png");
             this.imageList1.Images.SetKeyName(3, "1498696835_38.png");
             this.imageList1.Images.SetKeyName(4, "1498698707_pdf.png");
+            this.imageList1.Images.SetKeyName(5, "1498774299_mail-send-receive.png");
+            this.imageList1.Images.SetKeyName(6, "1498776018_mypc_config.png");
+            this.imageList1.Images.SetKeyName(7, "1498776186_admin.png");
+            this.imageList1.Images.SetKeyName(8, "1498786897_simpline_43.png");
             // 
             // btnCopiar
             // 
+            this.btnCopiar.Enabled = false;
             this.btnCopiar.ImageIndex = 1;
             this.btnCopiar.ImageList = this.imageList1;
-            this.btnCopiar.Location = new System.Drawing.Point(984, 14);
+            this.btnCopiar.Location = new System.Drawing.Point(1058, 14);
             this.btnCopiar.Name = "btnCopiar";
             this.btnCopiar.Size = new System.Drawing.Size(75, 65);
             this.btnCopiar.TabIndex = 4;
+            this.btnCopiar.Tag = "2";
             this.btnCopiar.Text = "Copiar";
             this.btnCopiar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnCopiar.UseVisualStyleBackColor = true;
@@ -110,12 +122,14 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.ImageIndex = 2;
             this.button1.ImageList = this.imageList1;
-            this.button1.Location = new System.Drawing.Point(903, 14);
+            this.button1.Location = new System.Drawing.Point(977, 14);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 65);
             this.button1.TabIndex = 5;
+            this.button1.Tag = "3";
             this.button1.Text = "Excel";
             this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button1.UseVisualStyleBackColor = true;
@@ -123,12 +137,14 @@
             // 
             // btnHtml
             // 
+            this.btnHtml.Enabled = false;
             this.btnHtml.ImageIndex = 3;
             this.btnHtml.ImageList = this.imageList1;
-            this.btnHtml.Location = new System.Drawing.Point(822, 14);
+            this.btnHtml.Location = new System.Drawing.Point(896, 14);
             this.btnHtml.Name = "btnHtml";
             this.btnHtml.Size = new System.Drawing.Size(75, 65);
             this.btnHtml.TabIndex = 6;
+            this.btnHtml.Tag = "4";
             this.btnHtml.Text = "html";
             this.btnHtml.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnHtml.UseVisualStyleBackColor = true;
@@ -138,7 +154,11 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.btnPdf);
+            this.groupBox1.Controls.Add(this.button5);
+            this.groupBox1.Controls.Add(this.button4);
+            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.btnUsuarios);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.frmSync);
             this.groupBox1.Controls.Add(this.cmbAlmacenes);
@@ -147,44 +167,107 @@
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Location = new System.Drawing.Point(13, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1146, 85);
+            this.groupBox1.Size = new System.Drawing.Size(1220, 85);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             // 
-            // btnPdf
+            // button4
             // 
-            this.btnPdf.ImageIndex = 4;
-            this.btnPdf.ImageList = this.imageList1;
-            this.btnPdf.Location = new System.Drawing.Point(741, 14);
-            this.btnPdf.Name = "btnPdf";
-            this.btnPdf.Size = new System.Drawing.Size(75, 65);
-            this.btnPdf.TabIndex = 8;
-            this.btnPdf.Text = "pdf";
-            this.btnPdf.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnPdf.UseVisualStyleBackColor = true;
-            this.btnPdf.Click += new System.EventHandler(this.btnPdf_Click);
+            this.button4.Enabled = false;
+            this.button4.ImageIndex = 7;
+            this.button4.ImageList = this.imageList1;
+            this.button4.Location = new System.Drawing.Point(572, 14);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 65);
+            this.button4.TabIndex = 11;
+            this.button4.Tag = "8";
+            this.button4.Text = "Usuarios";
+            this.button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Enabled = false;
+            this.button3.ImageIndex = 6;
+            this.button3.ImageList = this.imageList1;
+            this.button3.Location = new System.Drawing.Point(653, 14);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 65);
+            this.button3.TabIndex = 10;
+            this.button3.Tag = "7";
+            this.button3.Text = "Correo";
+            this.button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Enabled = false;
+            this.button2.ImageIndex = 5;
+            this.button2.ImageList = this.imageList1;
+            this.button2.Location = new System.Drawing.Point(734, 14);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 65);
+            this.button2.TabIndex = 9;
+            this.button2.Tag = "6";
+            this.button2.Text = "Correo";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // btnUsuarios
+            // 
+            this.btnUsuarios.Enabled = false;
+            this.btnUsuarios.ImageIndex = 4;
+            this.btnUsuarios.ImageList = this.imageList1;
+            this.btnUsuarios.Location = new System.Drawing.Point(815, 14);
+            this.btnUsuarios.Name = "btnUsuarios";
+            this.btnUsuarios.Size = new System.Drawing.Size(75, 65);
+            this.btnUsuarios.TabIndex = 8;
+            this.btnUsuarios.Tag = "5";
+            this.btnUsuarios.Text = "pdf";
+            this.btnUsuarios.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnUsuarios.UseVisualStyleBackColor = true;
+            this.btnUsuarios.Click += new System.EventHandler(this.btnPdf_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(7, 35);
+            this.label1.Location = new System.Drawing.Point(10, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(90, 20);
             this.label1.TabIndex = 7;
             this.label1.Text = "ALMACEN:";
             // 
-            // btnExcel
+            // button5
+            // 
+            this.button5.Enabled = false;
+            this.button5.ImageIndex = 8;
+            this.button5.ImageList = this.imageList1;
+            this.button5.Location = new System.Drawing.Point(491, 14);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 65);
+            this.button5.TabIndex = 12;
+            this.button5.Tag = "0";
+            this.button5.Text = "Salir";
+            this.button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // frmPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1171, 442);
+            this.ClientSize = new System.Drawing.Size(1245, 442);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grdDatos);
-            this.Name = "btnExcel";
+            this.Name = "frmPanel";
             this.Text = "frmPanel";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmPanel_Load);
+            this.Enter += new System.EventHandler(this.frmPanel_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.grdDatos)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -204,6 +287,10 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnPdf;
+        private System.Windows.Forms.Button btnUsuarios;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }

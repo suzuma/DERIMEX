@@ -13,10 +13,11 @@ using System.IO;
 using System.Diagnostics;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Configuration;
 
 namespace Reportes
 {
-    public partial class btnExcel : Form
+    public partial class frmPanel : Form
     {
         public static System.Drawing.Color cGris = System.Drawing.Color.FromArgb(251, 252, 252);
         public static System.Drawing.Color cVerde = System.Drawing.Color.FromArgb(229,255,204);
@@ -26,7 +27,7 @@ namespace Reportes
         int nRenglon = 0;
         admAlmacenes almacen;
 
-        public btnExcel()
+        public frmPanel()
         {
             InitializeComponent();            
         }
@@ -38,7 +39,7 @@ namespace Reportes
 
         private void cmbAlmacenes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            AcDeBotones();
+            //AcDeBotones();
             InicializarCiadricula();
             if (cmbAlmacenes.SelectedIndex > 0)
             {
@@ -50,7 +51,8 @@ namespace Reportes
                 nRenglon++;
                 procesarProductos();
             }
-            AcDeBotones();
+            
+            this.grdDatos.Focus();
         }
 
         private void procesarProductos()
@@ -180,6 +182,12 @@ namespace Reportes
             AcDeBotones();
 
 
+            if (conUsuarios.uAutentificado == null)
+            {
+                frmAutentificar nVentana = new frmAutentificar(this);
+                nVentana.ShowDialog();
+            }
+
         }
 
         private void frmSync_Click(object sender, EventArgs e)
@@ -189,6 +197,37 @@ namespace Reportes
         }
 
 
+
+        public void CargarPermisos() {
+            if (conUsuarios.uAutentificado != null)
+            {
+                foreach (object obj in this.groupBox1.Controls)
+                {
+                    if (obj is Button)
+                    {
+                        Button btn = (Button)obj;
+                        int idPermiso = Convert.ToInt32(btn.Tag);
+                        Boolean hayPemriso = true;
+                        if (idPermiso > 0) { 
+                            foreach (PermisoNegadoRol item in conUsuarios.uAutentificado.rol.PermisosNegados)
+                            {
+                                if (item.permiso.id== idPermiso)
+                                {
+                                    hayPemriso = false;
+                                }
+                            }
+                        }
+                        btn.Enabled = hayPemriso;
+                    }
+                }
+            }
+            else {
+                this.AcDeBotones();
+                    frmAutentificar nVentana = new frmAutentificar(this);
+                    nVentana.ShowDialog();
+                
+            }
+        }
 
 
         //FUNCION PARA COPIAR AL PORTA PAPELESEL GRID
@@ -413,7 +452,7 @@ namespace Reportes
 
 
         public void AcDeBotones() {
-            foreach (object obj in this.Controls) {
+            foreach (object obj in this.groupBox1.Controls) {
                 if (obj is Button) {
                     Button btn = (Button)obj;
                     btn.Enabled = !btn.Enabled;
@@ -547,6 +586,50 @@ namespace Reportes
                 values[i] = (float)dg.Columns[i].Width;
             }
             return values;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Tools.SendMail oMail = new Tools.SendMail(Tools.TYPE_EMAIL_SERVER.HOTMAIL);
+            String[] config = ConfigurationManager.AppSettings["strMail"].ToString().Split(';');
+            oMail.mUser = config[0];
+            oMail.mPassword = config[1];
+
+            oMail.mFrom = config[0];
+            oMail.mTo = "suzuma@gmail.com";
+            oMail.mSubject = "REPORTE-" + System.DateTime.Now.ToString("MMddyy");
+            oMail.mTextBody = DataGridtoHTML(this.grdDatos).ToString();
+            if (oMail.send())
+            {
+                MessageBox.Show("Información Enviada", "Sistema de reportes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else {
+                MessageBox.Show("Se presento un error, información no se envio", "Sistema de reportes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            frmConfiguracion config = new frmConfiguracion();
+            config.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            frmAdminUsuarios frmUsuario = new frmAdminUsuarios();
+            frmUsuario.Show();
+        }
+
+        private void frmPanel_Enter(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            conUsuarios.uAutentificado = null;
+            this.CargarPermisos();
+            
         }
     }
 }
