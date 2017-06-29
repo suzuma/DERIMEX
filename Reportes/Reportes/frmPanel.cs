@@ -489,12 +489,9 @@ namespace Reportes
             //SE GENERA EL ENCABEZADO DE LA TABLA EN EL PDF  
             for (int i = 0; i < grdDatos.ColumnCount; i++)
             {
-
                 objP = new Phrase(grdDatos.Columns[i].HeaderText, fuente);
                 datatable.HorizontalAlignment = Element.ALIGN_CENTER;
-
                 datatable.AddCell(objP);
-
             }
             datatable.HeaderRows = 2;
 
