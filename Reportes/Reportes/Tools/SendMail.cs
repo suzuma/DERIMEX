@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EASendMail;
+//using EASendMail;
+
+using System.Net.Mail;
 
 
 namespace Reportes.Tools
@@ -11,7 +13,7 @@ namespace Reportes.Tools
     //https://www.emailarchitect.net/easendmail/kb/csharp.aspx?cat=2
     class SendMail
     {
-        private SmtpMail oMail = new SmtpMail("TryIt");
+        //private SmtpMail oMail = new SmtpMail("TryIt");
         private SmtpClient oSmtp = new SmtpClient();
 
         public SendMail(TYPE_EMAIL_SERVER tipo)
@@ -56,16 +58,51 @@ namespace Reportes.Tools
             {
                 try
                 {
-                    /*
-                     Configuracion de Correo electronico a enviar
-                     */
+                    /*oSmtp.Port = 587;
+                    oSmtp.Host = "smtp.gmail.com";
+                    oSmtp.EnableSsl = true;
+                    oSmtp.Timeout = 10000;
+                    oSmtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    oSmtp.UseDefaultCredentials = false;
+                    oSmtp.Credentials = new System.Net.NetworkCredential(this.mUser, this.mPassword);
+
+                    MailMessage mMail = new MailMessage(this.mFrom, this.mTo, this.mSubject, this.mTextBody);
+                    mMail.BodyEncoding = UTF8Encoding.UTF8;
+                    mMail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                    oSmtp.Send(mMail); */
+
+                    MailMessage objeto_mail = new MailMessage();
+                    SmtpClient client = new SmtpClient();
+                    client.Port = 25;
+                    client.Host = "smtp.gmail.com";
+                    client.Timeout = 10000;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new System.Net.NetworkCredential(this.mUser, mPassword);
+                    objeto_mail.From = new MailAddress(this.mFrom);
+                    objeto_mail.To.Add(new MailAddress(this.mTo));
+                    objeto_mail.Subject = this.mSubject;
+                    objeto_mail.Body = this.mTextBody;
+                    client.Send(objeto_mail);
+
+                    return true;
+                }
+                catch (Exception ex) {
+                    return false;
+                }
+
+                /*try
+                {
+                    
+                     //Configuracion de Correo electronico a enviar
+                     
                     oMail.From = this.mFrom;
                     oMail.To = this.mTo;
                     oMail.Subject = this.mSubject;
                     oMail.TextBody = this.mTextBody;
-                    /*
-                     Configuracion de servidor de correo y autentificacion
-                     */
+                    
+                     //Configuracion de servidor de correo y autentificacion
+                     
                     SmtpServer oServer = new SmtpServer(this.mSMTP);
                     oServer.Port = this.mPort;
                     oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
@@ -79,10 +116,11 @@ namespace Reportes.Tools
                 {
                     ELog.save(this, ex);
                     return false;
-                }
+                }*/
             }
         }
 
+        /*
         /// <summary>
         /// FUNCTION RESPONSBALE DE AGRAGAR DOCUMENTOS ADJUNTOS AL CORREO
         /// </summary>
@@ -102,7 +140,7 @@ namespace Reportes.Tools
                 ELog.save(this, ex);
             }
         }
-
+        */
         #region "PROPIEDADES"
         public string mFrom { get; set; }
         public string mTo { get; set; }

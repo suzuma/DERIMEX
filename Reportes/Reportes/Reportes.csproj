@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EASendMail45, Version=7.3.1.2, Culture=neutral, PublicKeyToken=88adb80ecd66540b, processorArchitecture=MSIL">
       <HintPath>..\packages\EASendMail.7.3.1.2\lib\net45\EASendMail45.dll</HintPath>
@@ -101,6 +104,18 @@
     <Compile Include="frmConfiguracion.Designer.cs">
       <DependentUpon>frmConfiguracion.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmLotesCaducados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLotesCaducados.Designer.cs">
+      <DependentUpon>frmLotesCaducados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmManageAlmacenes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmManageAlmacenes.Designer.cs">
+      <DependentUpon>frmManageAlmacenes.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmNuevoUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +136,10 @@
     <Compile Include="Migrations\201706291656393_ADD-TABLES-PERMISOS.cs" />
     <Compile Include="Migrations\201706291656393_ADD-TABLES-PERMISOS.Designer.cs">
       <DependentUpon>201706291656393_ADD-TABLES-PERMISOS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706301609161_ADD-FROMULARIO-DETALLE.cs" />
+    <Compile Include="Migrations\201706301609161_ADD-FROMULARIO-DETALLE.Designer.cs">
+      <DependentUpon>201706301609161_ADD-FROMULARIO-DETALLE.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Modelo\admAlmacenes.cs" />
@@ -155,6 +174,12 @@
     <EmbeddedResource Include="frmConfiguracion.resx">
       <DependentUpon>frmConfiguracion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmLotesCaducados.resx">
+      <DependentUpon>frmLotesCaducados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmManageAlmacenes.resx">
+      <DependentUpon>frmManageAlmacenes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmNuevoUsuario.resx">
       <DependentUpon>frmNuevoUsuario.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706291656393_ADD-TABLES-PERMISOS.resx">
       <DependentUpon>201706291656393_ADD-TABLES-PERMISOS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706301609161_ADD-FROMULARIO-DETALLE.resx">
+      <DependentUpon>201706301609161_ADD-FROMULARIO-DETALLE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -193,6 +221,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\1498787292_user_login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -10,7 +10,9 @@ namespace Reportes.Modelo
 {
     [Table("admAlmacenes")]
    public class admAlmacenes
-    {  //MGW10003
+    {
+        #region "PROPIEDADES"
+        //MGW10003
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -80,9 +82,14 @@ namespace Reportes.Modelo
 
         public int CSISTORIG { get; set; }
 
+        public bool CSTATUS { get; set; }
+        #endregion
+
+        public admAlmacenes() {
+            this.CSTATUS = true;
+        }
 
 
-        
         public ICollection<admCapasProducto> admCapasProducto { get; set; }
         /// <summary>
         /// FUNCION RESPONSABLE DE OBTENER LA LISTA DE PRODUCTOS EN EL ALMACEN
@@ -104,6 +111,7 @@ namespace Reportes.Modelo
             stock = producto.CEXISTENCIA;
             return stock;
         }
+            
 
     }
 }

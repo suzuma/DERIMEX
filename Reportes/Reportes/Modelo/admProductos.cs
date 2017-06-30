@@ -8,7 +8,9 @@ namespace Reportes.Modelo
 {
     [Table("admProductos")]
     public class admProductos
-    { //MGW10005
+    {
+        #region "PROPIEDADES
+        //MGW10005
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CIDPRODUCTO { get; set; }
@@ -260,6 +262,8 @@ namespace Reportes.Modelo
 
         public ICollection<admCapasProducto> admCapasProducto { get; set; }
 
+        #endregion
+
         public double ObtenerInventario() {
             double total = 0;
             foreach (admCapasProducto item in this.admCapasProducto.ToList()) {
@@ -267,8 +271,6 @@ namespace Reportes.Modelo
             }
             return total;
         }
-
-
         public double CalcularCostoPromedio(int idAlmacen) {
             double total = 0;
             int indice = 0;
@@ -292,6 +294,31 @@ namespace Reportes.Modelo
                 }
             }
             return total;
+        }
+
+        public List<admCapasProducto> listarLotesCaducos(int idAlmacen) {
+            List<admCapasProducto> lCaducos = new List<Modelo.admCapasProducto>();
+            foreach (admCapasProducto item in this.admCapasProducto.Where(c => c.CIDALMACEN == idAlmacen).ToList()) {
+                double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
+                if (tdias <= 0)
+                {
+                    lCaducos.Add(item);
+                }
+            }
+            return lCaducos;
+        }
+        public List<admCapasProducto> listarLotesSinCaducar(int idAlmacen)
+        {
+            List<admCapasProducto> lsCaducos = new List<Modelo.admCapasProducto>();
+            foreach (admCapasProducto item in this.admCapasProducto.Where(c => c.CIDALMACEN == idAlmacen).ToList())
+            {
+                double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
+                if (tdias > 0)
+                {
+                    lsCaducos.Add(item);
+                }
+            }
+            return lsCaducos;
         }
 
         /// <summary>

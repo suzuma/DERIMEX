@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdminUsuarios));
             this.grdDatos = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -36,8 +37,8 @@
             this.btnNuevo = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtFiltro = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grdDatos)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -116,6 +117,14 @@
             this.panel1.Size = new System.Drawing.Size(759, 73);
             this.panel1.TabIndex = 3;
             // 
+            // txtFiltro
+            // 
+            this.txtFiltro.Location = new System.Drawing.Point(10, 38);
+            this.txtFiltro.Name = "txtFiltro";
+            this.txtFiltro.Size = new System.Drawing.Size(390, 20);
+            this.txtFiltro.TabIndex = 3;
+            this.txtFiltro.TextChanged += new System.EventHandler(this.txtFiltro_TextChanged);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -124,14 +133,6 @@
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Filtrar";
-            // 
-            // txtFiltro
-            // 
-            this.txtFiltro.Location = new System.Drawing.Point(10, 38);
-            this.txtFiltro.Name = "txtFiltro";
-            this.txtFiltro.Size = new System.Drawing.Size(390, 20);
-            this.txtFiltro.TabIndex = 3;
-            this.txtFiltro.TextChanged += new System.EventHandler(this.txtFiltro_TextChanged);
             // 
             // frmAdminUsuarios
             // 
@@ -142,6 +143,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.grdDatos);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmAdminUsuarios";

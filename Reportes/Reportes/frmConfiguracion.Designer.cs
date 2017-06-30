@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfiguracion));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtHost = new System.Windows.Forms.TextBox();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.txtBaseDatos = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtHost = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.txtPathAdminpaq = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.btnBuscar = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
@@ -65,37 +66,21 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Servidor MySql";
             // 
-            // label1
+            // txtBaseDatos
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Host";
+            this.txtBaseDatos.Location = new System.Drawing.Point(241, 48);
+            this.txtBaseDatos.Name = "txtBaseDatos";
+            this.txtBaseDatos.Size = new System.Drawing.Size(156, 20);
+            this.txtBaseDatos.TabIndex = 7;
             // 
-            // txtHost
+            // label4
             // 
-            this.txtHost.Location = new System.Drawing.Point(10, 48);
-            this.txtHost.Name = "txtHost";
-            this.txtHost.Size = new System.Drawing.Size(225, 20);
-            this.txtHost.TabIndex = 1;
-            // 
-            // txtUsuario
-            // 
-            this.txtUsuario.Location = new System.Drawing.Point(10, 91);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(187, 20);
-            this.txtUsuario.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Usuario";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(238, 31);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(77, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Base de Datos";
             // 
             // txtPassword
             // 
@@ -113,21 +98,37 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Clave de Acceso";
             // 
-            // txtBaseDatos
+            // txtUsuario
             // 
-            this.txtBaseDatos.Location = new System.Drawing.Point(241, 48);
-            this.txtBaseDatos.Name = "txtBaseDatos";
-            this.txtBaseDatos.Size = new System.Drawing.Size(156, 20);
-            this.txtBaseDatos.TabIndex = 7;
+            this.txtUsuario.Location = new System.Drawing.Point(10, 91);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(187, 20);
+            this.txtUsuario.TabIndex = 3;
             // 
-            // label4
+            // label2
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(238, 31);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Base de Datos";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 74);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Usuario";
+            // 
+            // txtHost
+            // 
+            this.txtHost.Location = new System.Drawing.Point(10, 48);
+            this.txtHost.Name = "txtHost";
+            this.txtHost.Size = new System.Drawing.Size(225, 20);
+            this.txtHost.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Host";
             // 
             // groupBox2
             // 
@@ -140,6 +141,16 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Servidor ODBC";
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Location = new System.Drawing.Point(321, 47);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscar.TabIndex = 2;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtPathAdminpaq
             // 
@@ -156,16 +167,6 @@
             this.label8.Size = new System.Drawing.Size(183, 13);
             this.label8.TabIndex = 0;
             this.label8.Text = "Carpeta de Base de Datos AdminPaq";
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Location = new System.Drawing.Point(321, 47);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscar.TabIndex = 2;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // btnGuardar
             // 
@@ -197,6 +198,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmConfiguracion";

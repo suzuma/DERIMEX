@@ -23,6 +23,7 @@ namespace Reportes
         public static System.Drawing.Color cVerde = System.Drawing.Color.FromArgb(229,255,204);
         public static System.Drawing.Color cAmarillo = System.Drawing.Color.FromArgb(255,255,204);
         public static System.Drawing.Color cRojo = System.Drawing.Color.FromArgb(255,229,204);
+        public static System.Drawing.Color cBlanco = System.Drawing.Color.FromArgb(255,255,255);
 
         int nRenglon = 0;
         admAlmacenes almacen;
@@ -87,6 +88,7 @@ namespace Reportes
                 grdDatos.Rows.Insert(nRenglon, "");
                 //grdDatos.Rows[nRenglon].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 grdDatos.Rows[nRenglon].Cells[1].Value = item.CCODIGOPRODUCTO.ToUpper();
+                grdDatos.Rows[nRenglon].Cells[1].ToolTipText = item.CIDPRODUCTO.ToString();
                 grdDatos.Rows[nRenglon].Cells[2].Value = item.CNOMBREPRODUCTO.ToUpper();
                             
                 grdDatos.Rows[nRenglon].Cells[4].Value =  item.CalcularTotalRango17(almacen.CIDALMACEN).ToString("N");
@@ -173,15 +175,15 @@ namespace Reportes
 
         private void frmPanel_Load(object sender, EventArgs e)
         {
-            AcDeBotones();
+            AcDeBotones(false);
             InicializarCiadricula();
             var lista = conAlmacen.listarAlmacenes();
             this.cmbAlmacenes.DisplayMember = "CNOMBREALMACEN";
             this.cmbAlmacenes.ValueMember = "CIDALMACEN";
             this.cmbAlmacenes.DataSource = lista;
-            AcDeBotones();
+            //AcDeBotones();
 
-
+            button5.Enabled = true;
             if (conUsuarios.uAutentificado == null)
             {
                 frmAutentificar nVentana = new frmAutentificar(this);
@@ -201,6 +203,7 @@ namespace Reportes
         public void CargarPermisos() {
             if (conUsuarios.uAutentificado != null)
             {
+                this.cmbAlmacenes.Enabled = true;
                 foreach (object obj in this.groupBox1.Controls)
                 {
                     if (obj is Button)
@@ -222,7 +225,8 @@ namespace Reportes
                 }
             }
             else {
-                this.AcDeBotones();
+                this.cmbAlmacenes.Enabled = false;
+                this.AcDeBotones(false);
                     frmAutentificar nVentana = new frmAutentificar(this);
                     nVentana.ShowDialog();
                 
@@ -334,7 +338,7 @@ namespace Reportes
         {
             grdDatos.Rows.Clear();
             grdDatos.Columns.Clear();
-            string[] columnas = new string[] { "ALMACEN-100", "CODIGO PRODUCTO-120", "DESCRIPCION-250", "EXISTENCIA TOTAL-100", "RANGO  1 A 7-60", "RANGO  8 A 16-60", "RANGO 17 A 30-60", "RANGO 31 MAS-60", "EXISTENCIA CON CADUCIDAD-85", "COSTO PROMEDIO-80", "PERDIDA-80" };
+            string[] columnas = new string[] { "ALMACEN-150", "CODIGO PRODUCTO-120", "DESCRIPCION-250", "EXISTENCIA TOTAL-100", "RANGO  1 A 7-60", "RANGO  8 A 16-60", "RANGO 17 A 30-60", "RANGO 31 MAS-60", "EXISTENCIA CON FECHA CADUCADA-85", "COSTO UNIT. PROM.-80", "PERDIDA TOTAL-80" };
             int iColumnas = 0;
             DataGridViewTextBoxColumn TextCol;
             foreach (string item in columnas)
@@ -451,11 +455,11 @@ namespace Reportes
         }
 
 
-        public void AcDeBotones() {
+        public void AcDeBotones(Boolean op) {
             foreach (object obj in this.groupBox1.Controls) {
                 if (obj is Button) {
                     Button btn = (Button)obj;
-                    btn.Enabled = !btn.Enabled;
+                    btn.Enabled = op;
                 }
             }
         }
@@ -627,9 +631,36 @@ namespace Reportes
 
         private void button5_Click(object sender, EventArgs e)
         {
-            conUsuarios.uAutentificado = null;
-            this.CargarPermisos();
+            if (conUsuarios.uAutentificado != null)
+            {
+                conUsuarios.uAutentificado = null;
+                this.CargarPermisos();
+                button5.Text = "Ingresar";
+            }
+            else {
+                CargarPermisos();
+                button5.Text = "Salir";
+            }
+            button5.Enabled = true;
+
+        }
+
+        private void grdDatos_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+           
             
+                DataGridViewRow row = grdDatos.Rows[e.RowIndex];
+                string strTem = row.Cells[1].ToolTipText;
+            frmLotesCaducados vLote = new frmLotesCaducados(almacen,Convert.ToInt32(strTem));
+            vLote.ShowDialog();
+
+            
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            frmManageAlmacenes vAlmacenes = new frmManageAlmacenes();
+            vAlmacenes.ShowDialog();
         }
     }
 }

@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reportes", "Reportes\Reportes.csproj", "{BE30A20F-31B8-41ED-85BA-82DF6347244C}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MedexSetupV3", "MedexSetupV3\MedexSetupV3.vdproj", "{5C29C7B0-DF1C-4E15-823F-E528BBA5E2CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{BE30A20F-31B8-41ED-85BA-82DF6347244C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE30A20F-31B8-41ED-85BA-82DF6347244C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE30A20F-31B8-41ED-85BA-82DF6347244C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C29C7B0-DF1C-4E15-823F-E528BBA5E2CE}.Debug|Any CPU.ActiveCfg = Debug
+		{5C29C7B0-DF1C-4E15-823F-E528BBA5E2CE}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

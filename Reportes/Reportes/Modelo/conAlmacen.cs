@@ -25,7 +25,13 @@ namespace Reportes.Modelo
             }
         }
 
-
+        public static void guardarAlmacen(admAlmacenes nAlmacen) {
+            using (var ctx = new DataModel()) {
+                ctx.Configuration.AutoDetectChangesEnabled = false;
+                ctx.Entry(nAlmacen).State = System.Data.Entity.EntityState.Modified;
+                ctx.SaveChanges();
+            }
+        }
 
 
         public static admProductos buscarProducto(int idProducto) {
