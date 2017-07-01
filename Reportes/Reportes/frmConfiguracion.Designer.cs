@@ -45,8 +45,16 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtPasswordHotmail = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtUsuarioHotmail = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtEmailAdmin = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -170,7 +178,7 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(334, 264);
+            this.btnGuardar.Location = new System.Drawing.Point(347, 392);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 3;
@@ -180,7 +188,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(253, 264);
+            this.btnCancelar.Location = new System.Drawing.Point(266, 392);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 4;
@@ -188,11 +196,75 @@
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.txtEmailAdmin);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.txtPasswordHotmail);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.txtUsuarioHotmail);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(13, 251);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(405, 135);
+            this.groupBox3.TabIndex = 5;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Cuenta Hotmail";
+            // 
+            // txtPasswordHotmail
+            // 
+            this.txtPasswordHotmail.Location = new System.Drawing.Point(203, 49);
+            this.txtPasswordHotmail.Name = "txtPasswordHotmail";
+            this.txtPasswordHotmail.Size = new System.Drawing.Size(194, 20);
+            this.txtPasswordHotmail.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(200, 32);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(88, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Clave de Acceso";
+            // 
+            // txtUsuarioHotmail
+            // 
+            this.txtUsuarioHotmail.Location = new System.Drawing.Point(10, 49);
+            this.txtUsuarioHotmail.Name = "txtUsuarioHotmail";
+            this.txtUsuarioHotmail.Size = new System.Drawing.Size(187, 20);
+            this.txtUsuarioHotmail.TabIndex = 7;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 32);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(32, 13);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Email";
+            // 
+            // txtEmailAdmin
+            // 
+            this.txtEmailAdmin.Location = new System.Drawing.Point(10, 91);
+            this.txtEmailAdmin.Name = "txtEmailAdmin";
+            this.txtEmailAdmin.Size = new System.Drawing.Size(187, 20);
+            this.txtEmailAdmin.TabIndex = 11;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 74);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(98, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Email Administrador";
+            // 
             // frmConfiguracion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(427, 306);
+            this.ClientSize = new System.Drawing.Size(427, 427);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.groupBox2);
@@ -209,6 +281,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -231,5 +305,12 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox txtEmailAdmin;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtPasswordHotmail;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtUsuarioHotmail;
+        private System.Windows.Forms.Label label6;
     }
 }

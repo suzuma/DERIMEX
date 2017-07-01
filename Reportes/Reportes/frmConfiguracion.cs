@@ -43,6 +43,14 @@ namespace Reportes
 
             //datos ODBC
             txtPathAdminpaq.Text = ConfigurationManager.AppSettings["pathAdminpaq"];
+
+            //hotmail
+            string datos = ConfigurationManager.AppSettings["Hotmail"];
+            txtUsuarioHotmail.Text = datos.Split(';')[0];
+            txtPasswordHotmail.Text = datos.Split(';')[1];
+            datos = ConfigurationManager.AppSettings["EmailAdmin"];
+            txtEmailAdmin.Text = datos;
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -59,8 +67,11 @@ namespace Reportes
             config.ConnectionStrings.ConnectionStrings["DataModel"].ConnectionString = cString;
 
             config.AppSettings.Settings["pathAdminpaq"].Value = txtPathAdminpaq.Text;
+            config.AppSettings.Settings["Hotmail"].Value = txtUsuarioHotmail.Text + ";" + txtPasswordHotmail.Text;
+            config.AppSettings.Settings["EmailAdmin"].Value = txtPathAdminpaq.Text;
 
-            config.Save(ConfigurationSaveMode.Modified);
+                config.Save(ConfigurationSaveMode.Modified);
+                this.Close();
             }
         }
     }

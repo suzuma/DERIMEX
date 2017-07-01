@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using System.Data.OleDb;
 using System.Data;
 using Reportes.Modelo;
-
+//DRIVER FOXPRO
+//https://download.microsoft.com/download/b/f/b/bfbfa4b8-7f91-4649-8dab-9a6476360365/VFPOLEDBSetup.msi
 namespace Reportes
 {
     class HtaMigracion

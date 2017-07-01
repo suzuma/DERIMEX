@@ -12,7 +12,7 @@ namespace Reportes.Modelo
         public static List<admAlmacenes> listarAlmacenes() {
             List<admAlmacenes> catAlmacen = new List<admAlmacenes>();
            using (var ctx = new DataModel()) {
-                catAlmacen = ctx.admAlmacenes.OrderBy(c=>c.CNOMBREALMACEN)
+                catAlmacen = ctx.admAlmacenes.Where(c=>c.CSTATUS==false).OrderBy(c=>c.CNOMBREALMACEN)
                     .ToList();
            }
             return catAlmacen;

@@ -71,23 +71,26 @@ namespace Reportes.Tools
                     mMail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
                     oSmtp.Send(mMail); */
 
-                    MailMessage objeto_mail = new MailMessage();
-                    SmtpClient client = new SmtpClient();
-                    client.Port = 25;
-                    client.Host = "smtp.gmail.com";
-                    client.Timeout = 10000;
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = new System.Net.NetworkCredential(this.mUser, mPassword);
-                    objeto_mail.From = new MailAddress(this.mFrom);
-                    objeto_mail.To.Add(new MailAddress(this.mTo));
-                    objeto_mail.Subject = this.mSubject;
-                    objeto_mail.Body = this.mTextBody;
-                    client.Send(objeto_mail);
+                    SmtpClient SmtpServer = new SmtpClient("smtp.live.com");
+                    var mail = new MailMessage();
+                    mail.From = new MailAddress("cacn86@hotmail.com");
+                    mail.To.Add("suzuma@gmail.com");
+                    mail.Subject = this.mSubject;
+                    mail.IsBodyHtml = true;
+                    string htmlBody;
+                    htmlBody = this.mTextBody;
+                    mail.Body = htmlBody;
+                    SmtpServer.Port = 587;
+                    SmtpServer.UseDefaultCredentials = false;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("cacn86@hotmail.com", "@Facac2017");
+                    SmtpServer.EnableSsl = true;
+                    SmtpServer.Send(mail);
+
 
                     return true;
                 }
                 catch (Exception ex) {
+                    ELog.save("Envio de Correo: ", ex);
                     return false;
                 }
 
