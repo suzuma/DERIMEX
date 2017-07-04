@@ -284,7 +284,7 @@
             this.Controls.Add(this.grdDatos);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmPanel";
-            this.Text = "frmPanel";
+            this.Text = "Panel de Control";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmPanel_Load);
             this.Enter += new System.EventHandler(this.frmPanel_Enter);

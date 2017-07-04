@@ -11,12 +11,20 @@ namespace Reportes.Modelo
     {
         public static List<admAlmacenes> listarAlmacenes() {
             List<admAlmacenes> catAlmacen = new List<admAlmacenes>();
-           using (var ctx = new DataModel()) {
-                catAlmacen = ctx.admAlmacenes.Where(c=>c.CSTATUS==false).OrderBy(c=>c.CNOMBREALMACEN)
-                    .ToList();
-           }
+            try { 
+               using (var ctx = new DataModel()) {
+                    Reportes.Tools.ELog.saveDebug("conAlmacenes", ctx.Permisos.Count().ToString());
+                    catAlmacen = ctx.admAlmacenes.Where(c=>c.CSTATUS==false).OrderBy(c=>c.CNOMBREALMACEN)
+                        .ToList();                    
+                }
+            }
+            catch (Exception ex )
+            {
+                Reportes.Tools.ELog.saveDebug("conAlmacenes", ex.Message);
+            }
             return catAlmacen;
         }
+
         public static admAlmacenes buscarAlmacen(int idAlmacen) {
             admAlmacenes almacen;
             using (var ctx = new DataModel()) {

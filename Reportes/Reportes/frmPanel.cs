@@ -175,19 +175,28 @@ namespace Reportes
 
         private void frmPanel_Load(object sender, EventArgs e)
         {
-            AcDeBotones(false);
-            InicializarCiadricula();
-            var lista = conAlmacen.listarAlmacenes();
-            this.cmbAlmacenes.DisplayMember = "CNOMBREALMACEN";
-            this.cmbAlmacenes.ValueMember = "CIDALMACEN";
-            this.cmbAlmacenes.DataSource = lista;
-            //AcDeBotones();
+            try {
+                AcDeBotones(false);
+                Reportes.Tools.ELog.save("PANEL DE CONTROL", new Exception("SE CARGARON LOS BONES"));
+                InicializarCiadricula();
+                Reportes.Tools.ELog.save("PANEL DE CONTROL", new Exception("CUADRICULA"));
+                var lista = conAlmacen.listarAlmacenes();
+                Reportes.Tools.ELog.save("PANEL DE CONTROL", new Exception("LISTA DE ALMACENES"));
+                this.cmbAlmacenes.DisplayMember = "CNOMBREALMACEN";
+                this.cmbAlmacenes.ValueMember = "CIDALMACEN";
+                this.cmbAlmacenes.DataSource = lista;
+                //AcDeBotones();
 
-            button5.Enabled = true;
-            if (conUsuarios.uAutentificado == null)
+                button5.Enabled = true;
+                if (conUsuarios.uAutentificado == null)
+                {
+                    frmAutentificar nVentana = new frmAutentificar(this);
+                    nVentana.ShowDialog();
+                }
+            }
+            catch (Exception ex)
             {
-                frmAutentificar nVentana = new frmAutentificar(this);
-                nVentana.ShowDialog();
+                Reportes.Tools.ELog.save("PANEL DE CONTROL", ex);
             }
 
         }
