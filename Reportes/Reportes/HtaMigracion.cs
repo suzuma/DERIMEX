@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data.OleDb;
 using System.Data;
 using Reportes.Modelo;
+using System.Configuration;
 //DRIVER FOXPRO
 //https://download.microsoft.com/download/b/f/b/bfbfa4b8-7f91-4649-8dab-9a6476360365/VFPOLEDBSetup.msi
 namespace Reportes
@@ -17,14 +18,20 @@ namespace Reportes
 
 
         public static void llenarDatosAlmacenes() {
-            OleDbCommand cm = new OleDbCommand("select * from MGW10003", getConeccion());
-            OleDbDataAdapter da = new OleDbDataAdapter(cm);
-            tDatos = new DataTable("Almacenes");
-            da.Fill(tDatos);
-            List<string> columnas = new List<string>();
-            foreach (DataColumn item in tDatos.Columns)
+            try { 
+                OleDbCommand cm = new OleDbCommand("select * from MGW10003", getConeccion());
+                OleDbDataAdapter da = new OleDbDataAdapter(cm);
+                tDatos = new DataTable("Almacenes");
+                da.Fill(tDatos);
+                List<string> columnas = new List<string>();
+                foreach (DataColumn item in tDatos.Columns)
+                {
+                    columnas.Add(item.ColumnName);
+                }
+            }
+            catch (Exception ex)
             {
-                columnas.Add(item.ColumnName);
+                Tools.ELog.save("CARGAR DATOS", ex);
             }
         }
         public static void CargarAlmacenes(System.ComponentModel.BackgroundWorker syn) {
@@ -910,7 +917,9 @@ namespace Reportes
         private static OleDbConnection getConeccion()
         {
             OleDbConnection cn = new OleDbConnection();
-            cn.ConnectionString = "Provider=vfpoledb;Data Source=C:\\Compacw\\Empresas\\SuZuMa\\Respaldo;Collating Sequence=general";
+            string path= ConfigurationManager.AppSettings["pathAdminpaq"];
+            //cn.ConnectionString = "Provider=vfpoledb;Data Source=C:\\Compacw\\Empresas\\SuZuMa\\Respaldo;Collating Sequence=general";
+            cn.ConnectionString = "Provider=vfpoledb;Data Source=" + path + ";Collating Sequence=general";
             return cn;
         }
         private static Boolean existeAlmacen(int Id)

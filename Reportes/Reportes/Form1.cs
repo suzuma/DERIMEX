@@ -32,6 +32,7 @@ namespace Reportes
 
         private void bakAsincronico_DoWork(object sender, DoWorkEventArgs e)
         {
+
             HtaMigracion.CargarAlmacenes(this.bakAsincronico);
             //HtaMigracion.CargarCapasProducto();
             //HtaMigracion.CargarAlmacenes();
@@ -105,15 +106,9 @@ namespace Reportes
             lblCapasProductos.Text = "Capas Productos... [ " + por.ToString() + "% ]";
         }
 
-       
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
 
-    
-
-       
-
-       
-       
-
-        
+        }
     }
 }

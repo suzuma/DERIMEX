@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Reportes.Modelo;
 
+using Reportes.Tools;
 namespace Reportes
 {
     public partial class frmLotesCaducados : Form
@@ -181,7 +182,16 @@ namespace Reportes
 
         private void btnCopiar_Click(object sender, EventArgs e)
         {
-            UI_GV_CopyData(grdDatos);
+            try {
+                using (new CursorWait())
+                {
+                    UI_GV_CopyData(grdDatos);
+                }
+            }
+            catch (Exception ex)
+            {
+                ELog.save("ERROR AL COPIAR EN CADUCOS", ex);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -190,22 +200,24 @@ namespace Reportes
             {
                 try
                 {
-                    this.UI_GV_CopyData(this.grdDatos);
-                    Microsoft.Office.Interop.Excel.Application xlexcel;
-                    Microsoft.Office.Interop.Excel.Workbook xlWorkBook;
-                    Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet;
-                    object valores = System.Reflection.Missing.Value;
-                    xlexcel = new Microsoft.Office.Interop.Excel.Application();
-                    xlexcel.Visible = true;
-                    xlWorkBook = xlexcel.Workbooks.Add(valores);
-                    xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-                    Microsoft.Office.Interop.Excel.Range cr = (Microsoft.Office.Interop.Excel.Range)xlWorkSheet.Cells[1, 1];
-                    cr.Select();
-                    xlWorkSheet.PasteSpecial(cr, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
+                    using(new CursorWait()) { 
+                        this.UI_GV_CopyData(this.grdDatos);
+                        Microsoft.Office.Interop.Excel.Application xlexcel;
+                        Microsoft.Office.Interop.Excel.Workbook xlWorkBook;
+                        Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet;
+                        object valores = System.Reflection.Missing.Value;
+                        xlexcel = new Microsoft.Office.Interop.Excel.Application();
+                        xlexcel.Visible = true;
+                        xlWorkBook = xlexcel.Workbooks.Add(valores);
+                        xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+                        Microsoft.Office.Interop.Excel.Range cr = (Microsoft.Office.Interop.Excel.Range)xlWorkSheet.Cells[1, 1];
+                        cr.Select();
+                        xlWorkSheet.PasteSpecial(cr, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
+                    }
                 }
                 catch (Exception ex)
                 {
-
+                    ELog.save("ERRO AL ENVIAR A EXCEL CADUCOS", ex);
                 }
             }
             else

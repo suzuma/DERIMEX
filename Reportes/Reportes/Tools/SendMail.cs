@@ -74,7 +74,7 @@ namespace Reportes.Tools
                     SmtpClient SmtpServer = new SmtpClient("smtp.live.com");
                     var mail = new MailMessage();
                     mail.From = new MailAddress("cacn86@hotmail.com");
-                    mail.To.Add("suzuma@gmail.com");
+                    mail.To.Add(this.mTo);
                     mail.Subject = this.mSubject;
                     mail.IsBodyHtml = true;
                     string htmlBody;
@@ -90,7 +90,7 @@ namespace Reportes.Tools
                     return true;
                 }
                 catch (Exception ex) {
-                    ELog.save("Envio de Correo: ", ex);
+                    ELog.save("ERROR AL ENVIAR CORREO ", ex);
                     return false;
                 }
 

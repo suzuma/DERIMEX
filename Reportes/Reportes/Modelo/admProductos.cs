@@ -287,10 +287,12 @@ namespace Reportes.Modelo
 
             foreach (admCapasProducto item in this.admCapasProducto.Where(c => c.CIDALMACEN == idAlmacen).ToList())
             {
-                double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
-                if (tdias<=0)
-                {
-                    total += item.CEXISTENCIA;
+                if (item.CTIPOCAPA != 5) { 
+                    double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
+                    if (tdias<=0)
+                    {
+                        total += item.CEXISTENCIA;
+                    }
                 }
             }
             return total;
@@ -331,10 +333,13 @@ namespace Reportes.Modelo
             
             foreach (admCapasProducto item in this.admCapasProducto.Where(c=>c.CIDALMACEN==idAlmacen).ToList())
             {
-                double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
-                if(tdias>=1 && tdias <= 7)
+                if (item.CTIPOCAPA != 5)
                 {
-                    total += item.CEXISTENCIA;
+                    double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
+                    if (tdias >= 1 && tdias <= 15)
+                    {
+                        total += item.CEXISTENCIA;
+                    }
                 }
             }
             return total;
@@ -349,10 +354,12 @@ namespace Reportes.Modelo
             double total = 0;
             foreach (admCapasProducto item in this.admCapasProducto.Where(c => c.CIDALMACEN == idAlmacen).ToList())
             {
-                double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
-                if (tdias >= 8 && tdias <= 16)
-                {
-                    total += item.CEXISTENCIA;
+                if (item.CTIPOCAPA != 5) { 
+                    double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
+                    if (tdias >= 16 && tdias <= 30)
+                    {
+                        total += item.CEXISTENCIA;
+                    }
                 }
             }
             return total;
@@ -367,10 +374,12 @@ namespace Reportes.Modelo
             double total = 0;
             foreach (admCapasProducto item in this.admCapasProducto.Where(c => c.CIDALMACEN == idAlmacen).ToList())
             {
-                double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
-                if (tdias >= 17 && tdias <= 30)
-                {
-                    total += item.CEXISTENCIA;
+                if (item.CTIPOCAPA != 5) { 
+                    double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
+                    if (tdias >= 31 && tdias <= 60)
+                    {
+                        total += item.CEXISTENCIA;
+                    }
                 }
             }
             return total;
@@ -385,15 +394,28 @@ namespace Reportes.Modelo
             double total = 0;
             foreach (admCapasProducto item in this.admCapasProducto.Where(c => c.CIDALMACEN == idAlmacen).ToList())
             {
-                double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
-                if (tdias >= 30)
-                {
-                    total += item.CEXISTENCIA;
+                if (item.CTIPOCAPA != 5) { 
+                    double tdias = CalcularDiasDeDiferencia(DateTime.Now, item.CFECHACADUCIDAD);
+                    if (tdias >= 61)
+                    {
+                        total += item.CEXISTENCIA;
+                    }
                 }
             }
             return total;
         }
 
+        public Boolean tieneCaducidad(int idAlmacen) {
+            Boolean tiene = true;
+            foreach (admCapasProducto item in this.admCapasProducto.Where(c => c.CIDALMACEN == idAlmacen).ToList())
+            {
+                if (item.CTIPOCAPA == 5) {
+                    tiene = false;
+                }
+                break;
+            }
+                return tiene;
+        }
 
 
         private double CalcularDiasDeDiferencia(DateTime FechaActual, DateTime FechaCaducar)

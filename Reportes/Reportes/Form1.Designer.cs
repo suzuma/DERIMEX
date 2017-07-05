@@ -52,6 +52,7 @@
             this.btnSincronizar.TabIndex = 0;
             this.btnSincronizar.Text = "Sincronizar";
             this.btnSincronizar.UseVisualStyleBackColor = true;
+            this.btnSincronizar.Visible = false;
             this.btnSincronizar.Click += new System.EventHandler(this.button1_Click);
             // 
             // proProductos
@@ -94,6 +95,8 @@
             this.btnCancelar.TabIndex = 7;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Visible = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // bakAsincronico
             // 
@@ -167,7 +170,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 374);
+            this.ClientSize = new System.Drawing.Size(480, 193);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lblAlmacenes);
             this.Controls.Add(this.proAlmacenes);

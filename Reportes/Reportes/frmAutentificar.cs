@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Reportes.Modelo;
+using Reportes.Tools;
 
 namespace Reportes
 {
@@ -28,19 +29,21 @@ namespace Reportes
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            ErrorProvider ep = new ErrorProvider();
-            if (txtPassword.Text.Length <= 0) {
+            using(new CursorWait()) { 
+                ErrorProvider ep = new ErrorProvider();
+                if (txtPassword.Text.Length <= 0) {
 
-                ep.SetError(label2, "Debe ingresar una clave de acceso");
-            } else {
-                ep.SetError(label2, "");
-                if (conUsuarios.autentificar(txtEmail.Text, txtPassword.Text))
-                {
-                    this.vPadre.CargarPermisos();
-                    this.Close();
-                }
-                else {
-                    MessageBox.Show("Datos incorrectos","Autentificando...",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    ep.SetError(label2, "Debe ingresar una clave de acceso");
+                } else {
+                    ep.SetError(label2, "");
+                    if (conUsuarios.autentificar(txtEmail.Text, txtPassword.Text))
+                    {
+                        this.vPadre.CargarPermisos();
+                        this.Close();
+                    }
+                    else {
+                        MessageBox.Show("Datos incorrectos","Autentificando...",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
                 }
             }
         }

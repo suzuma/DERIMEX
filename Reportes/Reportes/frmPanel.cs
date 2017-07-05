@@ -14,7 +14,9 @@ using System.Diagnostics;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Configuration;
+using Reportes.Tools;
 
+//5004-L, 5641-1000-L
 namespace Reportes
 {
     public partial class frmPanel : Form
@@ -41,18 +43,20 @@ namespace Reportes
         private void cmbAlmacenes_SelectedIndexChanged(object sender, EventArgs e)
         {
             //AcDeBotones();
-            InicializarCiadricula();
-            if (cmbAlmacenes.SelectedIndex > 0)
-            {
-                  almacen = conAlmacen.buscarAlmacen(Convert.ToInt32(cmbAlmacenes.SelectedValue));
-                //MOSTRAR DATOS ALMACEN
-                grdDatos.Rows.Insert(nRenglon,"");
-                grdDatos.Rows[nRenglon].Cells[0].Value = almacen.CNOMBREALMACEN.ToUpper();
-                grdDatos.Rows[nRenglon].Cells[0].ToolTipText = almacen.CCODIGOALMACEN.ToUpper();
-                nRenglon++;
-                procesarProductos();
+            using(new CursorWait()) { 
+                InicializarCiadricula();
+                if (cmbAlmacenes.SelectedIndex > 0)
+                {
+                      almacen = conAlmacen.buscarAlmacen(Convert.ToInt32(cmbAlmacenes.SelectedValue));
+                    //MOSTRAR DATOS ALMACEN
+                    grdDatos.Rows.Insert(nRenglon,"");
+                    grdDatos.Rows[nRenglon].Cells[0].Value = almacen.CNOMBREALMACEN.ToUpper();
+                    grdDatos.Rows[nRenglon].Cells[0].ToolTipText = almacen.CCODIGOALMACEN.ToUpper();
+                    nRenglon++;
+                    procesarProductos();
+                }
             }
-            
+
             this.grdDatos.Focus();
         }
 
@@ -84,78 +88,88 @@ namespace Reportes
             #endregion  
             
             foreach (admProductos item in almacen.listarProductos()) {
-                double merma = 0;
-                grdDatos.Rows.Insert(nRenglon, "");
-                //grdDatos.Rows[nRenglon].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                grdDatos.Rows[nRenglon].Cells[1].Value = item.CCODIGOPRODUCTO.ToUpper();
-                grdDatos.Rows[nRenglon].Cells[1].ToolTipText = item.CIDPRODUCTO.ToString();
-                grdDatos.Rows[nRenglon].Cells[2].Value = item.CNOMBREPRODUCTO.ToUpper();
-                            
-                grdDatos.Rows[nRenglon].Cells[4].Value =  item.CalcularTotalRango17(almacen.CIDALMACEN).ToString("N");
-                grdDatos.Rows[nRenglon].Cells[5].Value = item.CalcularTotalRango816(almacen.CIDALMACEN).ToString("N");
-                grdDatos.Rows[nRenglon].Cells[6].Value =  item.CalcularTotalRango1730(almacen.CIDALMACEN).ToString("N");
-                grdDatos.Rows[nRenglon].Cells[7].Value =  item.CalcularTotalRango3100(almacen.CIDALMACEN).ToString("N");
-                merma = item.CalcularTotalCaducos(almacen.CIDALMACEN);
-                grdDatos.Rows[nRenglon].Cells[8].Value = merma.ToString("N");
+                if (item.CSTATUSPRODUCTO == 1)
+                {
+                    double merma = 0;
+                    grdDatos.Rows.Insert(nRenglon, "");
+                    //grdDatos.Rows[nRenglon].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    grdDatos.Rows[nRenglon].Cells[1].Value = item.CCODIGOPRODUCTO.ToUpper();
+                    grdDatos.Rows[nRenglon].Cells[1].ToolTipText = item.CIDPRODUCTO.ToString();
+                    grdDatos.Rows[nRenglon].Cells[2].Value = item.CNOMBREPRODUCTO.ToUpper();
+                    
+                    grdDatos.Rows[nRenglon].Cells[4].Value = item.CalcularTotalRango17(almacen.CIDALMACEN).ToString("N");
+                    grdDatos.Rows[nRenglon].Cells[5].Value = item.CalcularTotalRango816(almacen.CIDALMACEN).ToString("N");
+                    grdDatos.Rows[nRenglon].Cells[6].Value = item.CalcularTotalRango1730(almacen.CIDALMACEN).ToString("N");
+                    grdDatos.Rows[nRenglon].Cells[7].Value = item.CalcularTotalRango3100(almacen.CIDALMACEN).ToString("N");
+                                       
+                    merma = item.CalcularTotalCaducos(almacen.CIDALMACEN);
+                    grdDatos.Rows[nRenglon].Cells[8].Value = merma.ToString("N");
 
-                double tStock = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[4].Value) +
-                    Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[5].Value) +
-                    Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[6].Value) +
-                    Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[7].Value) +
-                    Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[8].Value);
-                grdDatos.Rows[nRenglon].Cells[3].Value = tStock.ToString("N"); //almacen.stockProducto(item.CIDPRODUCTO)  + " [ " + tStock + " ]";
+                    double tStock = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[4].Value) +
+                        Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[5].Value) +
+                        Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[6].Value) +
+                        Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[7].Value) +
+                        Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[8].Value);
+                    grdDatos.Rows[nRenglon].Cells[3].Value = tStock.ToString("N"); //almacen.stockProducto(item.CIDPRODUCTO)  + " [ " + tStock + " ]";
 
-                double costo = item.CalcularCostoPromedio(almacen.CIDALMACEN);
-                grdDatos.Rows[nRenglon].Cells[9].Value = "$ " + costo.ToString("N");                               
-                grdDatos.Rows[nRenglon].Cells[10].Value = "$ " +(costo*merma).ToString("N");
+                    double costo = item.CalcularCostoPromedio(almacen.CIDALMACEN);
+                    grdDatos.Rows[nRenglon].Cells[9].Value = "$ " + costo.ToString("N");
+                    grdDatos.Rows[nRenglon].Cells[10].Value = "$ " + (costo * merma).ToString("N");
 
+                    if (!item.tieneCaducidad(almacen.CIDALMACEN))
+                    {
+                        grdDatos.Rows[nRenglon].Cells[0].Value = "S/C";
+                    }
 
-                #region "FORMATO"
-                double temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[8].Value);
-                //CADUCOS
+                    #region "FORMATO"
+                    double temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[8].Value);
+                    //CADUCOS
                     if (temp > 0)
                     {
                         grdDatos.Rows[nRenglon].Cells[8].Style.ForeColor = System.Drawing.Color.Red;
                         grdDatos.Rows[nRenglon].Cells[8].Style.BackColor = cRojo;
                         grdDatos.Rows[nRenglon].Cells[10].Style.BackColor = cRojo;
                     }
-                    else {
+                    else
+                    {
                         grdDatos.Rows[nRenglon].Cells[8].Style.ForeColor = System.Drawing.Color.Black;
                     }
 
-                //PRIMER RANGO
-                temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[4].Value);
-                if (temp > 0) {
-                    grdDatos.Rows[nRenglon].Cells[4].Style.BackColor = cRojo;
-                }
-                //SEGUNDO RANGO
-                temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[5].Value);
-                if (temp > 0)
-                {
-                    grdDatos.Rows[nRenglon].Cells[5].Style.BackColor = cAmarillo;
-                }
-                temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[6].Value);
-                if (temp > 0)
-                {
-                    grdDatos.Rows[nRenglon].Cells[6].Style.BackColor = cAmarillo;
-                }
-                //ULTIMO RANGO
-                temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[7].Value);
-                if (temp > 0)
-                {
-                    grdDatos.Rows[nRenglon].Cells[7].Style.BackColor = cVerde;
-                }
+                    //PRIMER RANGO
+                    temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[4].Value);
+                    if (temp > 0)
+                    {
+                        grdDatos.Rows[nRenglon].Cells[4].Style.BackColor = cRojo;
+                    }
+                    //SEGUNDO RANGO
+                    temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[5].Value);
+                    if (temp > 0)
+                    {
+                        grdDatos.Rows[nRenglon].Cells[5].Style.BackColor = cAmarillo;
+                    }
+                    temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[6].Value);
+                    if (temp > 0)
+                    {
+                        grdDatos.Rows[nRenglon].Cells[6].Style.BackColor = cAmarillo;
+                    }
+                    //ULTIMO RANGO
+                    temp = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[7].Value);
+                    if (temp > 0)
+                    {
+                        grdDatos.Rows[nRenglon].Cells[7].Style.BackColor = cVerde;
+                    }
 
-                //CENTRADO
-                grdDatos.Rows[nRenglon].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                grdDatos.Rows[nRenglon].Cells[5].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                grdDatos.Rows[nRenglon].Cells[6].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                grdDatos.Rows[nRenglon].Cells[7].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                grdDatos.Rows[nRenglon].Cells[8].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    //CENTRADO
+                    grdDatos.Rows[nRenglon].Cells[4].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    grdDatos.Rows[nRenglon].Cells[5].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    grdDatos.Rows[nRenglon].Cells[6].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    grdDatos.Rows[nRenglon].Cells[7].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    grdDatos.Rows[nRenglon].Cells[8].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                #endregion
+                    #endregion
 
-                nRenglon++;
+                    nRenglon++;
+                }
             }            
         }
 
@@ -238,6 +252,7 @@ namespace Reportes
                 this.AcDeBotones(false);
                     frmAutentificar nVentana = new frmAutentificar(this);
                     nVentana.ShowDialog();
+                this.grdDatos.Rows.Clear();
                 
             }
         }
@@ -327,11 +342,19 @@ namespace Reportes
 
         private void btnCopiar_Click(object sender, EventArgs e)
         {
-            if (this.grdDatos.Rows.Count > 1) { 
-                this.UI_GV_CopyData(this.grdDatos);
-             }
-            else {
-                MessageBox.Show("Debe seleccionar un Almacen","No hay almacen",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            using(new CursorWait()) {
+                try { 
+                    if (this.grdDatos.Rows.Count > 1) { 
+                        this.UI_GV_CopyData(this.grdDatos);
+                     }
+                    else {
+                        MessageBox.Show("Debe seleccionar un Almacen","No hay almacen",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ELog.save("ERROR AL COPIAR", ex);
+                }
             }
         }
 
@@ -379,6 +402,7 @@ namespace Reportes
         {
             if (grdDatos.Rows.Count > 1)
             {
+                using (new CursorWait()) { 
                 try { 
                     this.UI_GV_CopyData(this.grdDatos);
                     Microsoft.Office.Interop.Excel.Application xlexcel;
@@ -392,10 +416,10 @@ namespace Reportes
                     Microsoft.Office.Interop.Excel.Range cr = (Microsoft.Office.Interop.Excel.Range)xlWorkSheet.Cells[1, 1];
                     cr.Select();
                     xlWorkSheet.PasteSpecial(cr, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
-                    }
-                    catch (Exception ex) {
-
-                    }
+                 }catch (Exception ex) {
+                        ELog.save("ERROR AL ENVIAR A EXCEL", ex);
+                 }
+                }
             }
             else
             {
@@ -439,22 +463,31 @@ namespace Reportes
 
         private void btnHtml_Click(object sender, EventArgs e)
         {
+          
             if (grdDatos.Rows.Count > 1)
             {
-                StringBuilder tem = DataGridtoHTML(this.grdDatos);
-                using (SaveFileDialog dlg = new SaveFileDialog())
-                {
-                    dlg.Filter = "Data Files (*.html)|*.html";
-                    dlg.DefaultExt = "html";
-                    dlg.AddExtension = true;
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        string fileName = dlg.FileName;
+                using(new CursorWait()) {
+                    try { 
+                        StringBuilder tem = DataGridtoHTML(this.grdDatos);
+                        using (SaveFileDialog dlg = new SaveFileDialog())
+                        {
+                            dlg.Filter = "Data Files (*.html)|*.html";
+                            dlg.DefaultExt = "html";
+                            dlg.AddExtension = true;
+                            if (dlg.ShowDialog() == DialogResult.OK)
+                            {
+                                string fileName = dlg.FileName;
 
-                        System.IO.TextWriter w = new System.IO.StreamWriter(fileName);
-                        w.Write(tem);
-                        w.Flush();
-                        w.Close();
+                                System.IO.TextWriter w = new System.IO.StreamWriter(fileName);
+                                w.Write(tem);
+                                w.Flush();
+                                w.Close();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ELog.save("ERROR AL EXPORTAR A HTML", ex);
                     }
                 }
             }
@@ -476,36 +509,42 @@ namespace Reportes
         private void btnPdf_Click(object sender, EventArgs e)
         {
             if (this.grdDatos.Rows.Count > 1) {
-                SaveFileDialog save = new SaveFileDialog();
-                save.Filter = "PDF Files (*.pdf)|*.pdf";
-                save.DefaultExt = "pdf";
-                save.AddExtension = true;
-                save.FileName = "REPORTE-" + System.DateTime.Now.ToString("MMddyy");
-                if (save.ShowDialog() == DialogResult.OK) {
-                    string filename = save.FileName;
-                    Document doc = new Document(PageSize.A3, 9, 9, 9, 9);
-                    String Encabezado = "ALMACEN: " + this.cmbAlmacenes.Text + "   FECHA: " + System.DateTime.Now.ToString() +"\n\n";
-                    Chunk encab = new Chunk(Encabezado, FontFactory.GetFont("COURIER", 18));
-                    try
+                using (new CursorWait())
+                {
+                    SaveFileDialog save = new SaveFileDialog();
+                    save.Filter = "PDF Files (*.pdf)|*.pdf";
+                    save.DefaultExt = "pdf";
+                    save.AddExtension = true;
+                    save.FileName = "REPORTE-" + System.DateTime.Now.ToString("MMddyy");
+                    if (save.ShowDialog() == DialogResult.OK)
                     {
-                        FileStream file = new FileStream(filename, FileMode.OpenOrCreate);
-                        PdfWriter writer = PdfWriter.GetInstance(doc, file);
-                        writer.ViewerPreferences = PdfWriter.PageModeUseThumbs;
-                        writer.ViewerPreferences = PdfWriter.PageLayoutOneColumn;
-                        doc.Open();
-                       
-                        doc.Add(new Paragraph(encab));
-                        GenerarDocumentos(doc);
+                        string filename = save.FileName;
+                        Document doc = new Document(PageSize.A3, 9, 9, 9, 9);
+                        String Encabezado = "ALMACEN: " + this.cmbAlmacenes.Text + "   FECHA: " + System.DateTime.Now.ToString() + "\n\n";
+                        Chunk encab = new Chunk(Encabezado, FontFactory.GetFont("COURIER", 18));
+                        try
+                        {
+                            FileStream file = new FileStream(filename, FileMode.OpenOrCreate);
+                            PdfWriter writer = PdfWriter.GetInstance(doc, file);
+                            writer.ViewerPreferences = PdfWriter.PageModeUseThumbs;
+                            writer.ViewerPreferences = PdfWriter.PageLayoutOneColumn;
+                            doc.Open();
 
-                        Process.Start(filename);
-                        doc.Close();
+                            doc.Add(new Paragraph(encab));
+                            GenerarDocumentos(doc);
+
+                            Process.Start(filename);
+                            doc.Close();
+                        }
+
+                        catch (Exception ex)
+                        {
+                            ELog.save("ERROR AL EXPORTAR PDF", ex);
+                        }
                     }
 
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
                 }
+
             } else {
                 MessageBox.Show("Debe seleccionar un Almacen", "No hay almacen", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -603,21 +642,31 @@ namespace Reportes
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Tools.SendMail oMail = new Tools.SendMail(Tools.TYPE_EMAIL_SERVER.HOTMAIL);
-            String[] config = ConfigurationManager.AppSettings["strMail"].ToString().Split(';');
-            oMail.mUser = config[0];
-            oMail.mPassword = config[1];
+            using(new CursorWait()) { 
+                try
+                {
+                    Tools.SendMail oMail = new Tools.SendMail(Tools.TYPE_EMAIL_SERVER.HOTMAIL);
+                    String[] config = ConfigurationManager.AppSettings["Hotmail"].ToString().Split(';');
+                    oMail.mUser = config[0];
+                    oMail.mPassword = config[1];
 
-            oMail.mFrom = config[0];
-            oMail.mTo = "suzuma@gmail.com";
-            oMail.mSubject = "REPORTE-" + System.DateTime.Now.ToString("MMddyy");
-            oMail.mTextBody = DataGridtoHTML(this.grdDatos).ToString();
-            if (oMail.send())
-            {
-                MessageBox.Show("Información Enviada", "Sistema de reportes", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else {
-                MessageBox.Show("Se presento un error, información no se envio", "Sistema de reportes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    oMail.mFrom = config[0];
+                    oMail.mTo = "artsannav55@hotmail.com";
+                    oMail.mSubject = "REPORTE-" + System.DateTime.Now.ToString("MMddyy");
+                    oMail.mTextBody = DataGridtoHTML(this.grdDatos).ToString();
+                    if (oMail.send())
+                    {
+                        MessageBox.Show("Información Enviada", "Sistema de reportes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Se presento un error, información no se envio", "Sistema de reportes", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Reportes.Tools.ELog.save("ENVIO DE CORREO", ex);
+                }
             }
         }
 
@@ -656,14 +705,18 @@ namespace Reportes
 
         private void grdDatos_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-           
-            
+            if (grdDatos.Rows[e.RowIndex].Cells[0].Value.ToString()!="S/C")
+            {
+
                 DataGridViewRow row = grdDatos.Rows[e.RowIndex];
                 string strTem = row.Cells[1].ToolTipText;
-            frmLotesCaducados vLote = new frmLotesCaducados(almacen,Convert.ToInt32(strTem));
-            vLote.ShowDialog();
+                frmLotesCaducados vLote = new frmLotesCaducados(almacen, Convert.ToInt32(strTem));
+                vLote.ShowDialog();
+            }
+            else {
+                MessageBox.Show("El producto seleccionado no tiene caducidad","Sin Caducidad",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            }
 
-            
         }
 
         private void button6_Click(object sender, EventArgs e)

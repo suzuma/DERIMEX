@@ -14,7 +14,7 @@ namespace Reportes.Modelo
             try { 
                using (var ctx = new DataModel()) {
                     Reportes.Tools.ELog.saveDebug("conAlmacenes", ctx.Permisos.Count().ToString());
-                    catAlmacen = ctx.admAlmacenes.Where(c=>c.CSTATUS==false).OrderBy(c=>c.CNOMBREALMACEN)
+                    catAlmacen = ctx.admAlmacenes.Where(c=>c.CSTATUS==true).OrderBy(c=>c.CNOMBREALMACEN)
                         .ToList();                    
                 }
             }

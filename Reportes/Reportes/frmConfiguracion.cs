@@ -68,7 +68,7 @@ namespace Reportes
 
             config.AppSettings.Settings["pathAdminpaq"].Value = txtPathAdminpaq.Text;
             config.AppSettings.Settings["Hotmail"].Value = txtUsuarioHotmail.Text + ";" + txtPasswordHotmail.Text;
-            config.AppSettings.Settings["EmailAdmin"].Value = txtPathAdminpaq.Text;
+            config.AppSettings.Settings["EmailAdmin"].Value = txtEmailAdmin.Text;
 
                 config.Save(ConfigurationSaveMode.Modified);
                 this.Close();

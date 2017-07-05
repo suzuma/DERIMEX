@@ -54,18 +54,27 @@ namespace Reportes
             }
             }
         }
+        /*
+         Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            if (match.Success)
+                Response.Write(email + " is correct");
+            else
+                Response.Write(email + " is incorrect");
+             */
 
-
-         public bool IsValidEmail(string strIn)
+        public bool IsValidEmail(string strIn)
             {
             bool valido = false;
-                System.Text.RegularExpressions.Regex rEmail = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$");
+                System.Text.RegularExpressions.Regex rEmail = new System.Text.RegularExpressions.Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
-                if (strIn.Length > 0 && strIn.Trim().Length != 0)
+            if (strIn.Length > 0 && strIn.Trim().Length != 0)
                 {
-                    if (!rEmail.IsMatch(strIn.Trim()))
+                Match match = rEmail.Match(strIn);
+
+                    if (match.Success)
                     {
-                    valido= true;
+                        valido= true;
                     }
 
             }
