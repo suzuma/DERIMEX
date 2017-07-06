@@ -417,6 +417,17 @@ namespace Reportes.Modelo
                 return tiene;
         }
 
+        public double calcularStrock(int idAlmacen) {
+            double total = 0;
+            foreach (admCapasProducto item in this.admCapasProducto.Where(c => c.CIDALMACEN == idAlmacen).ToList())
+            {
+                
+                        total += item.CEXISTENCIA;                    
+                
+            }
+            return total;
+        }
+
 
         private double CalcularDiasDeDiferencia(DateTime FechaActual, DateTime FechaCaducar)
         {

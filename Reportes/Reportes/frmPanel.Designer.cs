@@ -58,7 +58,7 @@
             this.grdDatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdDatos.Location = new System.Drawing.Point(12, 94);
             this.grdDatos.Name = "grdDatos";
-            this.grdDatos.Size = new System.Drawing.Size(1221, 344);
+            this.grdDatos.Size = new System.Drawing.Size(1221, 401);
             this.grdDatos.TabIndex = 0;
             this.grdDatos.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdDatos_CellContentDoubleClick);
             // 
@@ -279,7 +279,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1245, 442);
+            this.ClientSize = new System.Drawing.Size(1245, 499);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grdDatos);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

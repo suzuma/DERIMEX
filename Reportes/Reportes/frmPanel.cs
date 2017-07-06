@@ -15,6 +15,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Configuration;
 using Reportes.Tools;
+using System.Net.Mail;
 
 //5004-L, 5641-1000-L
 namespace Reportes
@@ -105,11 +106,12 @@ namespace Reportes
                     merma = item.CalcularTotalCaducos(almacen.CIDALMACEN);
                     grdDatos.Rows[nRenglon].Cells[8].Value = merma.ToString("N");
 
-                    double tStock = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[4].Value) +
+                    /*double tStock = Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[4].Value) +
                         Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[5].Value) +
                         Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[6].Value) +
                         Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[7].Value) +
-                        Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[8].Value);
+                        Convert.ToDouble(grdDatos.Rows[nRenglon].Cells[8].Value);*/
+                    double tStock = item.calcularStrock(almacen.CIDALMACEN);
                     grdDatos.Rows[nRenglon].Cells[3].Value = tStock.ToString("N"); //almacen.stockProducto(item.CIDPRODUCTO)  + " [ " + tStock + " ]";
 
                     double costo = item.CalcularCostoPromedio(almacen.CIDALMACEN);
@@ -370,7 +372,7 @@ namespace Reportes
         {
             grdDatos.Rows.Clear();
             grdDatos.Columns.Clear();
-            string[] columnas = new string[] { "ALMACEN-150", "CODIGO PRODUCTO-120", "DESCRIPCION-250", "EXISTENCIA TOTAL-100", "RANGO  1 A 7-60", "RANGO  8 A 16-60", "RANGO 17 A 30-60", "RANGO 31 MAS-60", "EXISTENCIA CON FECHA CADUCADA-85", "COSTO UNIT. PROM.-80", "PERDIDA TOTAL-80" };
+            string[] columnas = new string[] { "ALMACEN-150", "CODIGO PRODUCTO-120", "DESCRIPCION-250", "EXISTENCIA TOTAL-100", "RANGO  1 A 15-60", "RANGO  16 A 30-60", "RANGO 31 A 60-60", "RANGO 61 MAS-60", "EXISTENCIA CON FECHA CADUCADA-85", "COSTO UNIT. PROM.-80", "PERDIDA TOTAL-80" };
             int iColumnas = 0;
             DataGridViewTextBoxColumn TextCol;
             foreach (string item in columnas)
@@ -532,9 +534,9 @@ namespace Reportes
 
                             doc.Add(new Paragraph(encab));
                             GenerarDocumentos(doc);
-
-                            Process.Start(filename);
                             doc.Close();
+                            Process.Start(filename);
+                            
                         }
 
                         catch (Exception ex)
@@ -645,7 +647,7 @@ namespace Reportes
             using(new CursorWait()) { 
                 try
                 {
-                    Tools.SendMail oMail = new Tools.SendMail(Tools.TYPE_EMAIL_SERVER.HOTMAIL);
+                    /*Tools.SendMail oMail = new Tools.SendMail(Tools.TYPE_EMAIL_SERVER.HOTMAIL);
                     String[] config = ConfigurationManager.AppSettings["Hotmail"].ToString().Split(';');
                     oMail.mUser = config[0];
                     oMail.mPassword = config[1];
@@ -661,11 +663,28 @@ namespace Reportes
                     else
                     {
                         MessageBox.Show("Se presento un error, información no se envio", "Sistema de reportes", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    }*/
+                    String[] config = ConfigurationManager.AppSettings["Hotmail"].ToString().Split(';');
+                    Correos cr = new Correos(config[0],config[1]);
+                    MailMessage msaje = new MailMessage();
+                    msaje.Subject = "REPORTE-" + System.DateTime.Now.ToString("MMddyy");
+                    msaje.To.Add(new MailAddress(ConfigurationManager.AppSettings["EmailAdmin"].ToString()));
+                    msaje.From = new MailAddress(config[0],"Sistema de Gestion de Reportes");
+                    //si quieres atach
+                    //msaje.Attachments.Add(new Attachment("c:\\archivo.pdf"));
+
+                    msaje.Body= DataGridtoHTML(this.grdDatos).ToString();
+                    msaje.IsBodyHtml = true;
+                    cr.MandarCorreo(msaje);
+
+                    MessageBox.Show("Información enviada");
                 }
                 catch (Exception ex)
                 {
                     Reportes.Tools.ELog.save("ENVIO DE CORREO", ex);
+                    if (ex.InnerException != null) {
+                        Reportes.Tools.ELog.save("ENVIO DE CORREO", ex.InnerException);
+                    }
                 }
             }
         }
