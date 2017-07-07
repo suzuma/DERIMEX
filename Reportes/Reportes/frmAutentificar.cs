@@ -14,7 +14,27 @@ namespace Reportes
 {
     public partial class frmAutentificar : Form
     {
+        private static frmAutentificar instancia = null;
         frmPanel vPadre;
+
+        public static frmAutentificar getIntancia(frmPanel padre) {
+            if (instancia == null) {
+                instancia = new frmAutentificar(padre);
+            }
+            return instancia;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+            instancia = null;
+        }
+
+
         public frmAutentificar(frmPanel padre)
         {
             InitializeComponent();

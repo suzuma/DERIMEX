@@ -14,6 +14,24 @@ namespace Reportes
 {
     public partial class frmAdminUsuarios : Form
     {
+        private static frmAdminUsuarios instancia = null;
+
+        public static frmAdminUsuarios getInstancia() {
+
+            if (instancia == null) {
+                instancia = new frmAdminUsuarios();
+            }
+            return instancia;
+        }
+
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+            instancia = null;
+        }
+
         public void cargarDatos() {
             this.grdDatos.DataSource = conUsuarios.listar();
         }
@@ -41,7 +59,7 @@ namespace Reportes
 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
-            frmNuevoUsuario nUsuario = new frmNuevoUsuario(this);
+            frmNuevoUsuario nUsuario = frmNuevoUsuario.getInstancia(this);
             nUsuario.ShowDialog();
         }
     }

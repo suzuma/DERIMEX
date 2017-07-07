@@ -206,7 +206,7 @@ namespace Reportes
                 button5.Enabled = true;
                 if (conUsuarios.uAutentificado == null)
                 {
-                    frmAutentificar nVentana = new frmAutentificar(this);
+                    frmAutentificar nVentana = frmAutentificar.getIntancia(this);
                     nVentana.ShowDialog();
                 }
             }
@@ -252,7 +252,7 @@ namespace Reportes
             else {
                 this.cmbAlmacenes.Enabled = false;
                 this.AcDeBotones(false);
-                    frmAutentificar nVentana = new frmAutentificar(this);
+                    frmAutentificar nVentana = frmAutentificar.getIntancia(this);
                     nVentana.ShowDialog();
                 this.grdDatos.Rows.Clear();
                 
@@ -664,19 +664,32 @@ namespace Reportes
                     {
                         MessageBox.Show("Se presento un error, información no se envio", "Sistema de reportes", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }*/
-                    String[] config = ConfigurationManager.AppSettings["Hotmail"].ToString().Split(';');
-                    Correos cr = new Correos(config[0],config[1]);
-                    MailMessage msaje = new MailMessage();
-                    msaje.Subject = "REPORTE-" + System.DateTime.Now.ToString("MMddyy");
-                    msaje.To.Add(new MailAddress(ConfigurationManager.AppSettings["EmailAdmin"].ToString()));
-                    msaje.From = new MailAddress(config[0],"Sistema de Gestion de Reportes");
-                    //si quieres atach
-                    //msaje.Attachments.Add(new Attachment("c:\\archivo.pdf"));
+                    bool outlook = Convert.ToBoolean(ConfigurationManager.AppSettings["Outlook"]);
+                    if (outlook) {
+                        bool bRes = Correos.sendEmailViaOutlook(
+                            "Info@cokomi.mx",
+                            ConfigurationManager.AppSettings["EmailAdmin"].ToString(), null,
+                             this.cmbAlmacenes.Text + "-" + System.DateTime.Now.ToString("MMddyy"),
+                            "My message body - " + DateTime.Now.ToString(),
+                            BodyType.PlainText,
+                            null,
+                            null);
+                    } else {     
 
-                    msaje.Body= DataGridtoHTML(this.grdDatos).ToString();
-                    msaje.IsBodyHtml = true;
-                    cr.MandarCorreo(msaje);
+                        String[] config = ConfigurationManager.AppSettings["Hotmail"].ToString().Split(';');
+                        Correos cr = new Correos(config[0],config[1]);
+                        MailMessage msaje = new MailMessage();
+                        msaje.Subject = "REPORTE-" + System.DateTime.Now.ToString("MMddyy");
+                        msaje.To.Add(new MailAddress(ConfigurationManager.AppSettings["EmailAdmin"].ToString()));
+                        msaje.From = new MailAddress(config[0],"Sistema de Gestion de Reportes");
+                        //si quieres atach
+                        //msaje.Attachments.Add(new Attachment("c:\\archivo.pdf"));
 
+                        msaje.Body= DataGridtoHTML(this.grdDatos).ToString();
+                        msaje.IsBodyHtml = true;
+                        cr.MandarCorreo(msaje);
+
+                    }
                     MessageBox.Show("Información enviada");
                 }
                 catch (Exception ex)
@@ -697,7 +710,7 @@ namespace Reportes
 
         private void button4_Click(object sender, EventArgs e)
         {
-            frmAdminUsuarios frmUsuario = new frmAdminUsuarios();
+            frmAdminUsuarios frmUsuario = frmAdminUsuarios.getInstancia();
             frmUsuario.Show();
         }
 
@@ -729,7 +742,7 @@ namespace Reportes
 
                 DataGridViewRow row = grdDatos.Rows[e.RowIndex];
                 string strTem = row.Cells[1].ToolTipText;
-                frmLotesCaducados vLote = new frmLotesCaducados(almacen, Convert.ToInt32(strTem));
+                frmLotesCaducados vLote =  frmLotesCaducados.getIntancia(almacen, Convert.ToInt32(strTem));
                 vLote.ShowDialog();
             }
             else {
@@ -740,7 +753,7 @@ namespace Reportes
 
         private void button6_Click(object sender, EventArgs e)
         {
-            frmManageAlmacenes vAlmacenes = new frmManageAlmacenes();
+            frmManageAlmacenes vAlmacenes =  frmManageAlmacenes.getIntancia();
             vAlmacenes.ShowDialog();
         }
     }

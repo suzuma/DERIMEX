@@ -14,10 +14,28 @@ namespace Reportes
 {
     public partial class frmLotesCaducados : Form
     {
+        private static frmLotesCaducados instancia = null;
         admAlmacenes almacen;
         int tIdProducto;
         admProductos tProducto;
         int nRenglon = 0;
+
+        public static frmLotesCaducados getIntancia(admAlmacenes talmacen, int idProducto) {
+            if (instancia == null) {
+                instancia = new frmLotesCaducados(talmacen, idProducto);
+            }
+            return instancia;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+            instancia = null;
+        }
 
         public frmLotesCaducados(admAlmacenes tAlmacen, int idProducto)
         {

@@ -13,8 +13,30 @@ namespace Reportes
 {
     public partial class frmManageAlmacenes : Form
     {
+
+        public static frmManageAlmacenes instancia = null;
+
         int nRenglon = 0;
         List<admAlmacenes> almacenes;
+
+        public static  frmManageAlmacenes getIntancia() {
+            if (instancia == null) {
+                instancia = new frmManageAlmacenes();
+            }
+            return instancia;
+        }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+            instancia = null;
+        }
+
         public frmManageAlmacenes()
         {
             InitializeComponent();

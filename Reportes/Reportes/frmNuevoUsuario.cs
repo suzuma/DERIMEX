@@ -9,6 +9,22 @@ namespace Reportes
     {
         bool invalid = false;
         frmAdminUsuarios vPadre;
+        private static frmNuevoUsuario instancia = null;
+        public static frmNuevoUsuario getInstancia(frmAdminUsuarios padre) {
+            if (instancia == null) {
+                instancia = new frmNuevoUsuario(padre);
+            }
+            return instancia;
+        }
+
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+            instancia = null;
+        }
+
         public frmNuevoUsuario(frmAdminUsuarios padre)
         {
             InitializeComponent();
