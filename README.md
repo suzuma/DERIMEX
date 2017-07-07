@@ -1,8 +1,7 @@
 # DERIMEX
 Patron de diseño Singleton en los Formularios
 
- private static frmAutentificar instancia = null;
-        frmPanel vPadre;
+        private static frmAutentificar instancia = null;        
 
         public static frmAutentificar getIntancia(frmPanel padre) {
             if (instancia == null) {
@@ -11,13 +10,14 @@ Patron de diseño Singleton en los Formularios
             return instancia;
         }
 
-//ESTR CODIGO SE DEBE ELIMINAR DE LA CLASE (EN EL CONSTRUCTOR)
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-            instancia = null;
-        }
+ESTE CODIGO SE DEBE ELIMINAR DE LA CLASE (EN EL CONSTRUCTOR)
+     
+     protected override void Dispose(bool disposing)
+         {
+             if (disposing && (components != null))
+             {
+                 components.Dispose();
+             }
+             base.Dispose(disposing);
+             instancia = null;
+         }
