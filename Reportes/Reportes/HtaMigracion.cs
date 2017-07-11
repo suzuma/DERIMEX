@@ -356,16 +356,21 @@ namespace Reportes
                     {
                         if (existeCapa(nCapa.CIDCAPA))
                         {
-                            //ctx.Entry(nCapa).State = System.Data.Entity.EntityState.Modified;
+                            if (existeCambioStock(nCapa.CIDCAPA, nCapa.CEXISTENCIA)) {
+                                ctx.Entry(nCapa).State = System.Data.Entity.EntityState.Modified;
+                                ctx.SaveChanges();
+                                Reportes.Tools.ELog.saveDebug(syn, "EXISTENCIA [ " + indice.ToString() + " ] CIDPROD: " + nCapa.CIDPRODUCTO);
+                            }
                         }
                         else
                         {
                             ctx.admCapasProducto.Add(nCapa);
                             ctx.SaveChanges();
+                            Reportes.Tools.ELog.saveDebug(syn, "[ " + indice.ToString() + " ] CIDPROD: " + nCapa.CIDPRODUCTO);
                         }
                         
                         indice++;
-                        syn.ReportProgress(indice);
+                        syn.ReportProgress(indice);                        
                     }
                     catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
                     {
@@ -922,6 +927,9 @@ namespace Reportes
             cn.ConnectionString = "Provider=vfpoledb;Data Source=" + path + ";Collating Sequence=general";
             return cn;
         }
+
+       
+
         private static Boolean existeAlmacen(int Id)
         {
             admAlmacenes tAlmacen = new admAlmacenes();
@@ -961,6 +969,34 @@ namespace Reportes
             }
             if (tAlmacen != null)
                 return true;
+            else
+                return false;
+        }
+
+        private static Boolean existeCambioStock(int Id, double stock)
+        {
+            admCapasProducto tAlmacen = new admCapasProducto();
+            try
+            {
+                using (var ctx = new DataModel())
+                {
+                    tAlmacen = ctx.admCapasProducto
+                        .Where(r => r.CIDCAPA == Id)
+                        .FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            if (tAlmacen != null)
+                if (tAlmacen.CEXISTENCIA != stock)
+                {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             else
                 return false;
         }
