@@ -46,18 +46,32 @@ namespace Reportes
 
         private void frmLotesCaducados_Load(object sender, EventArgs e)
         {
+            if (grdDatos.Rows.Count > 1)
+            {
+               // cargarDatos(talmacen, idProducto);
+            }
+
+        }
+
+        public void cargarDatos(admAlmacenes talmacen, int idProducto)
+        {
             InicializarCiadricula();
+            grdDatos.Rows.Clear();
             grdDatos.Rows.Add(nRenglon, "");
-            
+
             grdDatos.Rows[nRenglon].Cells[0].Value = almacen.CNOMBREALMACEN;
             nRenglon++;
-
-            tProducto = almacen.listarProductos().Where(c => c.CIDPRODUCTO == tIdProducto).FirstOrDefault();
-            List<admCapasProducto> lProductosCaducos = tProducto.listarLotesCaducos(almacen.CIDALMACEN).Where(c => c.CIDPRODUCTO == tIdProducto).ToList();
-            DesplegarLista(lProductosCaducos);
-            lProductosCaducos = tProducto.listarLotesSinCaducar(almacen.CIDALMACEN).Where(c => c.CIDPRODUCTO == tIdProducto).ToList();
-            DesplegarLista(lProductosCaducos,false);
-
+            List<admCapasProducto> lProductosCaducos;
+            tProducto = almacen.listarProductos().Where(c => c.CIDPRODUCTO == idProducto).FirstOrDefault();
+            if (tProducto != null)
+            {
+                lProductosCaducos = tProducto.listarLotesCaducos(almacen.CIDALMACEN)
+                    .Where(c => c.CIDPRODUCTO == idProducto).ToList();
+                DesplegarLista(lProductosCaducos);
+            }
+            lProductosCaducos = tProducto.listarLotesSinCaducar(almacen.CIDALMACEN)
+                .Where(c => c.CIDPRODUCTO == idProducto).ToList();
+            DesplegarLista(lProductosCaducos, false);
         }
 
         private void AddColumna(int iColumna, int aColumna)

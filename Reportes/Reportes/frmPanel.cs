@@ -743,6 +743,7 @@ namespace Reportes
                 DataGridViewRow row = grdDatos.Rows[e.RowIndex];
                 string strTem = row.Cells[1].ToolTipText;
                 frmLotesCaducados vLote =  frmLotesCaducados.getIntancia(almacen, Convert.ToInt32(strTem));
+                vLote.cargarDatos(almacen, Convert.ToInt32(strTem));
                 vLote.ShowDialog();
             }
             else {
@@ -755,6 +756,28 @@ namespace Reportes
         {
             frmManageAlmacenes vAlmacenes =  frmManageAlmacenes.getIntancia();
             vAlmacenes.ShowDialog();
+        }
+
+        public int BuscarProducto(string codigoProducto) {
+            this.grdDatos.ClearSelection();
+            int total = 0;
+            foreach (DataGridViewRow item in this.grdDatos.Rows) {
+                if (item.Cells[1].Value != null) { 
+                    string codigo = item.Cells[1].Value.ToString();
+                    if (codigo.Contains(codigoProducto.ToUpper())) {
+                        item.Selected = true;
+                        total++;
+                    }
+                }
+            }
+            return total;
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            frmFiltrar tVentana = frmFiltrar.getIntancia(this);
+            tVentana.ShowDialog();
+
         }
     }
 }
